@@ -4,6 +4,8 @@
  */
 package views;
 
+import java.awt.Color;
+
 /**
  *
  * @author Fábio
@@ -27,7 +29,21 @@ public class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        Title = new javax.swing.JLabel();
+        BarberComboBox = new javax.swing.JComboBox<>();
+        ScissorsIcon = new javax.swing.JLabel();
+        ServiceComboBox = new javax.swing.JComboBox<>();
+        EditIcon = new javax.swing.JLabel();
+        ClipboardIcon = new javax.swing.JLabel();
+        DataTextField = new javax.swing.JTextField();
+        HourTextField = new javax.swing.JTextField();
+        WatchIcon = new javax.swing.JLabel();
+        Obs = new javax.swing.JLabel();
+        ObsTextArea = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        LogoutIcon = new javax.swing.JLabel();
         MenuText = new javax.swing.JLabel();
         ProfileIcon = new javax.swing.JLabel();
         Profile = new javax.swing.JTextField();
@@ -42,8 +58,147 @@ public class Home extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout-icon.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 580, -1, -1));
+        jPanel2.setBackground(new java.awt.Color(9, 9, 10));
+
+        Title.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        Title.setForeground(new java.awt.Color(255, 255, 255));
+        Title.setText("Realize um agendamento");
+
+        BarberComboBox.setBackground(new java.awt.Color(66, 66, 71));
+        BarberComboBox.setForeground(new java.awt.Color(255, 255, 255));
+        BarberComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolher um barbeiro" }));
+        BarberComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BarberComboBoxActionPerformed(evt);
+            }
+        });
+
+        ScissorsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/scissors-icon.png"))); // NOI18N
+
+        ServiceComboBox.setBackground(new java.awt.Color(66, 66, 71));
+        ServiceComboBox.setForeground(new java.awt.Color(255, 255, 255));
+        ServiceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolher um serviço" }));
+        ServiceComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ServiceComboBoxActionPerformed(evt);
+            }
+        });
+
+        EditIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit-icon.png"))); // NOI18N
+
+        ClipboardIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clipboard-icon.png"))); // NOI18N
+
+        DataTextField.setBackground(new java.awt.Color(66, 66, 71));
+        DataTextField.setForeground(new java.awt.Color(255, 255, 255));
+        DataTextField.setText("Data:");
+
+        HourTextField.setBackground(new java.awt.Color(66, 66, 71));
+        HourTextField.setForeground(new java.awt.Color(255, 255, 255));
+        HourTextField.setText("Hora:");
+
+        WatchIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/watch-icon.png"))); // NOI18N
+
+        Obs.setBackground(new java.awt.Color(141, 141, 153));
+        Obs.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        Obs.setForeground(new java.awt.Color(255, 255, 255));
+        Obs.setText("Observação:");
+
+        ObsTextArea.setBackground(new java.awt.Color(66, 66, 71));
+        ObsTextArea.setColumns(20);
+        ObsTextArea.setRows(5);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dollar-sign-icon.png"))); // NOI18N
+
+        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Agendar");
+        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 3, true));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(ScissorsIcon)
+                                .addGap(18, 18, 18)
+                                .addComponent(BarberComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(ClipboardIcon)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Obs)
+                                    .addComponent(DataTextField))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(EditIcon)
+                                .addGap(18, 18, 18)
+                                .addComponent(ServiceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(WatchIcon)
+                                .addGap(18, 18, 18)
+                                .addComponent(HourTextField)))
+                        .addGap(96, 96, 96))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(ObsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 493, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(107, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Title)
+                .addGap(179, 179, 179))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(271, 271, 271)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(308, 308, 308)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(Title)
+                .addGap(48, 48, 48)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(BarberComboBox)
+                        .addComponent(ScissorsIcon))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(ServiceComboBox)
+                        .addComponent(EditIcon)))
+                .addGap(47, 47, 47)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(ClipboardIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DataTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(WatchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(HourTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(27, 27, 27)
+                .addComponent(Obs)
+                .addGap(18, 18, 18)
+                .addComponent(ObsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, 720, 570));
+
+        LogoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout-icon.png"))); // NOI18N
+        jPanel1.add(LogoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 580, -1, -1));
 
         MenuText.setBackground(new java.awt.Color(255, 255, 255));
         MenuText.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
@@ -78,6 +233,11 @@ public class Home extends javax.swing.JFrame {
         MySchedule.setText("Meus Agendamentos");
         MySchedule.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(9, 9, 10), 12, true));
         MySchedule.setCaretColor(new java.awt.Color(9, 9, 10));
+        MySchedule.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MyScheduleMouseClicked(evt);
+            }
+        });
         jPanel1.add(MySchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
 
         NewScheduleButton.setEditable(false);
@@ -93,6 +253,7 @@ public class Home extends javax.swing.JFrame {
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-small.png"))); // NOI18N
         jPanel1.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, -1, -1));
 
+        Background.setBackground(new java.awt.Color(66, 66, 71));
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background.png"))); // NOI18N
         jPanel1.add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(286, 0, -1, -1));
 
@@ -118,6 +279,18 @@ public class Home extends javax.swing.JFrame {
     private void ProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfileActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ProfileActionPerformed
+
+    private void MyScheduleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MyScheduleMouseClicked
+        
+    }//GEN-LAST:event_MyScheduleMouseClicked
+
+    private void BarberComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BarberComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BarberComboBoxActionPerformed
+
+    private void ServiceComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ServiceComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,14 +329,28 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JComboBox<String> BarberComboBox;
+    private javax.swing.JLabel ClipboardIcon;
+    private javax.swing.JTextField DataTextField;
+    private javax.swing.JLabel EditIcon;
+    private javax.swing.JTextField HourTextField;
     private javax.swing.JLabel Logo;
+    private javax.swing.JLabel LogoutIcon;
     private javax.swing.JLabel MenuText;
     private javax.swing.JTextField MySchedule;
     private javax.swing.JTextField NewScheduleButton;
+    private javax.swing.JLabel Obs;
+    private javax.swing.JTextArea ObsTextArea;
     private javax.swing.JTextField Profile;
     private javax.swing.JLabel ProfileIcon;
+    private javax.swing.JLabel ScissorsIcon;
+    private javax.swing.JComboBox<String> ServiceComboBox;
     private javax.swing.JLabel SidebarBackground;
+    private javax.swing.JLabel Title;
+    private javax.swing.JLabel WatchIcon;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
