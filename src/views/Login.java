@@ -4,10 +4,7 @@
  */
 package views;
 
-/**
- *
- * @author Fábio
- */
+
 public class Login extends javax.swing.JFrame {
 
     /**
