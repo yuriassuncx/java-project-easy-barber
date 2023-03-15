@@ -91,10 +91,25 @@ public class Home extends javax.swing.JFrame {
         DataTextField.setBackground(new java.awt.Color(66, 66, 71));
         DataTextField.setForeground(new java.awt.Color(255, 255, 255));
         DataTextField.setText("Data:");
+        DataTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DataTextFieldMouseClicked(evt);
+            }
+        });
+        DataTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DataTextFieldActionPerformed(evt);
+            }
+        });
 
         HourTextField.setBackground(new java.awt.Color(66, 66, 71));
         HourTextField.setForeground(new java.awt.Color(255, 255, 255));
         HourTextField.setText("Hora:");
+        HourTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HourTextFieldMouseClicked(evt);
+            }
+        });
 
         WatchIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/watch-icon.png"))); // NOI18N
 
@@ -291,6 +306,22 @@ public class Home extends javax.swing.JFrame {
     private void ServiceComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ServiceComboBoxActionPerformed
+
+    private void DataTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DataTextFieldActionPerformed
+
+    private void DataTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataTextFieldMouseClicked
+        if(DataTextField.getText().equals("Data:")) {
+            DataTextField.setText("");
+        }
+    }//GEN-LAST:event_DataTextFieldMouseClicked
+
+    private void HourTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HourTextFieldMouseClicked
+        if(HourTextField.getText().equals("Hora:")) {
+            HourTextField.setText("");
+        }
+    }//GEN-LAST:event_HourTextFieldMouseClicked
 
     /**
      * @param args the command line arguments
