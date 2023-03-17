@@ -3,22 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package views;
-
-
 import database.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 
-public class Login extends javax.swing.JFrame {
+
+public class Cadastro extends javax.swing.JFrame {
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Cadastro() {
         initComponents();
     }
 
@@ -32,14 +30,16 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         labelEmail = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        btnCadastrar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        tfUsuario = new javax.swing.JTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        iconSenha = new javax.swing.JLabel();
         pfSenha = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
+        tfEmail = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
+        tfNome = new javax.swing.JTextField();
+        iconSenha = new javax.swing.JLabel();
         iconEmail = new javax.swing.JLabel();
         logo = new javax.swing.JLabel();
         bg = new javax.swing.JLabel();
@@ -49,53 +49,16 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel3.setFont(new java.awt.Font("Javanese Text", 1, 26)); // NOI18N
+        jLabel3.setText("Nome:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, -1, 60));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/hash-icon.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(105, 260, 40, 40));
+
         labelEmail.setFont(new java.awt.Font("Javanese Text", 1, 26)); // NOI18N
         labelEmail.setText("Email:");
-        jPanel1.add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, -1, 40));
-
-        jLabel1.setFont(new java.awt.Font("Javanese Text", 1, 26)); // NOI18N
-        jLabel1.setText("Senha:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 350, 110, 40));
-
-        btnCadastrar.setText("Cadastrar");
-        btnCadastrar.setBorder(null);
-        btnCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 480, 80, 30));
-
-        jButton1.setBorder(null);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButton1.setLabel("Login");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 480, 80, 30));
-
-        tfUsuario.setBackground(new java.awt.Color(204, 204, 204));
-        tfUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tfUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfUsuarioActionPerformed(evt);
-            }
-        });
-        jPanel1.add(tfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 320, 30));
-
-        jCheckBox1.setText("Sou Administrador");
-        jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, -1, -1));
-
-        iconSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/password-icon.png"))); // NOI18N
-        jPanel1.add(iconSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 50, 50));
+        jPanel1.add(labelEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, -1, 60));
 
         pfSenha.setBackground(new java.awt.Color(204, 204, 204));
         pfSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -104,11 +67,56 @@ public class Login extends javax.swing.JFrame {
                 pfSenhaActionPerformed(evt);
             }
         });
-        jPanel1.add(pfSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 360, 320, 30));
+        jPanel1.add(pfSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, 320, 30));
+
+        jLabel1.setFont(new java.awt.Font("Javanese Text", 1, 26)); // NOI18N
+        jLabel1.setText("Senha:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 380, 90, 60));
+
+        tfEmail.setBackground(new java.awt.Color(204, 204, 204));
+        tfEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tfEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfEmailActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tfEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 330, 320, 30));
+
+        jButton1.setText("Cadastrar");
+        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 480, 80, 30));
+
+        btnVoltar.setText("Voltar");
+        btnVoltar.setBorder(null);
+        btnVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVoltarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnVoltar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 480, 80, 30));
+
+        tfNome.setBackground(new java.awt.Color(204, 204, 204));
+        tfNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tfNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfNomeActionPerformed(evt);
+            }
+        });
+        jPanel1.add(tfNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, 320, 30));
+
+        iconSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/password-icon.png"))); // NOI18N
+        jPanel1.add(iconSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 50, 70));
 
         iconEmail.setFont(new java.awt.Font("Javanese Text", 1, 22)); // NOI18N
         iconEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/email-icon.png"))); // NOI18N
-        jPanel1.add(iconEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, -1, -1));
+        jPanel1.add(iconEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, -1, -1));
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
         jPanel1.add(logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, 180));
@@ -126,71 +134,60 @@ public class Login extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuarioActionPerformed
+    private void tfNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfNomeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tfUsuarioActionPerformed
+    }//GEN-LAST:event_tfNomeActionPerformed
+
+    private void tfEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfEmailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         try {
-             //criando conexao
+        try {
             Connection con = Conexao.faz_conexao();
             
-            String sql = "select *from cadastro where nome=? and senha=?";
+            String sql = "INSERT INTO cadastro(nome,email,senha) values (?,?,?)";
             
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, tfUsuario.getText());
-            stmt.setString(2, pfSenha.getText());
             
+            stmt.setString(1,tfNome.getText());
+            stmt.setString(2,tfEmail.getText());
+            stmt.setString(3, new String (pfSenha.getPassword()));
             
-            ResultSet rs = stmt.executeQuery();
-            
-            if(rs.next()){
-                Home exibir = new Home();
-                exibir.setVisible(true);
-                setVisible(false);
-
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Usuario/Senha incorreto");
-            }
+            stmt.execute();
             
             stmt.close();
             con.close();
-    
-        } 
-        
-        catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
+            tfNome.setText("");
+            tfEmail.setText("");
+            pfSenha.setText("");
+            
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         // TODO add your handling code here:
-        Cadastro exibir = new Cadastro();
+       
+            //criando conexao
+                Login exibir = new Login();
                 exibir.setVisible(true);
                 setVisible(false);
-    }//GEN-LAST:event_btnCadastrarActionPerformed
+          
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void pfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pfSenhaActionPerformed
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        if (jCheckBox1.isSelected()) {
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new Admin().setVisible(true);
-                }
-            });            
-        }
-    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -209,36 +206,39 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Cadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Cadastro().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bg;
-    private javax.swing.JButton btnCadastrar;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JLabel iconEmail;
     private javax.swing.JLabel iconSenha;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel logo;
     private javax.swing.JPasswordField pfSenha;
-    private javax.swing.JTextField tfUsuario;
+    private javax.swing.JTextField tfEmail;
+    private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
 }
