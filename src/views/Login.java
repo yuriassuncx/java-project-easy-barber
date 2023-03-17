@@ -27,8 +27,8 @@ public class Login extends javax.swing.JFrame {
         labelEmail = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        textFieldSenha = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        inputPassword = new javax.swing.JPasswordField();
+        inputEmail = new javax.swing.JTextField();
         jCheckBox1 = new javax.swing.JCheckBox();
         iconSenha = new javax.swing.JLabel();
         iconEmail = new javax.swing.JLabel();
@@ -53,23 +53,19 @@ public class Login extends javax.swing.JFrame {
         jButton1.setLabel("Login");
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 480, 80, 30));
 
-        textFieldSenha.setBackground(new java.awt.Color(204, 204, 204));
-        textFieldSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        textFieldSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldSenhaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(textFieldSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, 320, 30));
+        inputPassword.setBackground(new java.awt.Color(204, 204, 204));
+        inputPassword.setText("jPasswordField1");
+        inputPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(inputPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 350, 320, 30));
 
-        jTextField2.setBackground(new java.awt.Color(204, 204, 204));
-        jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        inputEmail.setBackground(new java.awt.Color(204, 204, 204));
+        inputEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        inputEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                inputEmailActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 320, 30));
+        jPanel1.add(inputEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 320, 30));
 
         jCheckBox1.setText("Sou Administrador");
         jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, -1, -1));
@@ -103,13 +99,9 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void inputEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void textFieldSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldSenhaActionPerformed
+    }//GEN-LAST:event_inputEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,13 +142,13 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel bg;
     private javax.swing.JLabel iconEmail;
     private javax.swing.JLabel iconSenha;
+    private javax.swing.JTextField inputEmail;
+    private javax.swing.JPasswordField inputPassword;
     private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel logo;
-    private javax.swing.JTextField textFieldSenha;
     // End of variables declaration//GEN-END:variables
 }

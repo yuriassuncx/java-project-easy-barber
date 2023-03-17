@@ -30,7 +30,7 @@ public class Cadastro extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        textFieldSenha = new javax.swing.JTextField();
+        inputPassword = new javax.swing.JPasswordField();
         jTextField2 = new javax.swing.JTextField();
         iconSenha = new javax.swing.JLabel();
         iconEmail = new javax.swing.JLabel();
@@ -71,14 +71,10 @@ public class Cadastro extends javax.swing.JFrame {
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 480, 80, 30));
 
-        textFieldSenha.setBackground(new java.awt.Color(204, 204, 204));
-        textFieldSenha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        textFieldSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldSenhaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(textFieldSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, 320, 30));
+        inputPassword.setBackground(new java.awt.Color(204, 204, 204));
+        inputPassword.setText("jPasswordField1");
+        inputPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(inputPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, 320, 30));
 
         jTextField2.setBackground(new java.awt.Color(204, 204, 204));
         jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -121,10 +117,6 @@ public class Cadastro extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void textFieldSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldSenhaActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
@@ -170,6 +162,7 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JLabel bg;
     private javax.swing.JLabel iconEmail;
     private javax.swing.JLabel iconSenha;
+    private javax.swing.JPasswordField inputPassword;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -179,6 +172,5 @@ public class Cadastro extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel logo;
-    private javax.swing.JTextField textFieldSenha;
     // End of variables declaration//GEN-END:variables
 }
