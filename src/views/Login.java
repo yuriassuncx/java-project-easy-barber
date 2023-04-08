@@ -92,6 +92,11 @@ public class Login extends javax.swing.JFrame {
         jPanel1.add(tfUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 320, 30));
 
         jCheckBox1.setText("Sou Administrador");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, -1, -1));
 
         iconSenha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/password-icon.png"))); // NOI18N
@@ -142,28 +147,49 @@ public class Login extends javax.swing.JFrame {
              //criando conexao
             Connection con = Conexao.faz_conexao();
             
-            String sql = "SELECT * FROM user WHERE name=? AND password=?";
+            if (jCheckBox1.isSelected()) {
+                String sql = "SELECT * FROM admin WHERE username=? AND password=?";
             
-            PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, tfUsuario.getText());
-            stmt.setString(2, pfSenha.getText());
-            
-            
-            ResultSet rs = stmt.executeQuery();
-            
-            if(rs.next()){
-                Home exibir = new Home();
-                exibir.setVisible(true);
-                setVisible(false);
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setString(1, tfUsuario.getText());
+                stmt.setString(2, pfSenha.getText());
 
-                
+
+                ResultSet rs = stmt.executeQuery();
+
+                if(rs.next()){
+                    Admin exibir = new Admin();
+                    exibir.setVisible(true);
+                    setVisible(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario/Senha incorreto");
+                }
+
+                stmt.close();
+                con.close();
             } else {
-                JOptionPane.showMessageDialog(null, "Usuario/Senha incorreto");
-            }
+                String sql = "SELECT * FROM user WHERE name=? AND password=?";
             
-            stmt.close();
-            con.close();
-    
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setString(1, tfUsuario.getText());
+                stmt.setString(2, pfSenha.getText());
+
+
+                ResultSet rs = stmt.executeQuery();
+
+                if(rs.next()){
+                    Home exibir = new Home();
+                    exibir.setVisible(true);
+                    setVisible(false);
+
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Usuario/Senha incorreto");
+                }
+
+                stmt.close();
+                con.close();
+            }
         } 
         
         catch (SQLException e) {
@@ -191,6 +217,10 @@ public class Login extends javax.swing.JFrame {
             });            
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments
