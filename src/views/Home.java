@@ -4,19 +4,99 @@
  */
 package views;
 
+import database.Conexao;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Vector;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Fábio
  */
 public class Home extends javax.swing.JFrame {
-
+    
+    Vector<Integer> id_barber = new Vector<Integer>();
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+        getAllBarbers();
+        getAllServices();
+    }
+    
+    private void getAllBarbers() {
+        try {
+            Connection con = Conexao.faz_conexao();
+            
+            String sql = "SELECT * FROM barber";
+            
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                id_barber.addElement(rs.getInt(1));
+                BarberComboBox.addItem(rs.getString(2));
+            }
+            
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não há barbeiro disponível!");
+        }
+    }
+    
+    private void getAllServices() {
+        try {
+            Connection con = Conexao.faz_conexao();
+            
+            String sql = "SELECT * FROM service";
+            
+            PreparedStatement stmt = con.prepareStatement(sql);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                id_barber.addElement(rs.getInt(1));
+                ServiceComboBox.addItem(rs.getString(2));
+            }
+            
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Não há serviço disponível!");
+        }
+    }
+    
+    private void alterCutValueByServiceId() {        
+        String serviceName = (String) ServiceComboBox.getSelectedItem();
+        
+        try {
+            Connection con = Conexao.faz_conexao();
+            
+            String sql = "SELECT * FROM service WHERE cut_type=?";
+            
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, serviceName);
+            
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()){
+                cutValueLabel.setText(rs.getString(3));
+            } else {
+                cutValueLabel.setText("0");
+            }
+            
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Algum erro aconteceu!");
+        }
     }
 
     /**
@@ -41,7 +121,7 @@ public class Home extends javax.swing.JFrame {
         WatchIcon = new javax.swing.JLabel();
         Obs = new javax.swing.JLabel();
         ObsTextArea = new javax.swing.JTextArea();
-        jLabel1 = new javax.swing.JLabel();
+        cutValueLabel = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         LogoutIcon = new javax.swing.JLabel();
         MenuText = new javax.swing.JLabel();
@@ -67,6 +147,11 @@ public class Home extends javax.swing.JFrame {
         BarberComboBox.setBackground(new java.awt.Color(66, 66, 71));
         BarberComboBox.setForeground(new java.awt.Color(255, 255, 255));
         BarberComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolher um barbeiro" }));
+        BarberComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BarberComboBoxMouseClicked(evt);
+            }
+        });
         BarberComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BarberComboBoxActionPerformed(evt);
@@ -78,6 +163,11 @@ public class Home extends javax.swing.JFrame {
         ServiceComboBox.setBackground(new java.awt.Color(66, 66, 71));
         ServiceComboBox.setForeground(new java.awt.Color(255, 255, 255));
         ServiceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolher um serviço" }));
+        ServiceComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ServiceComboBoxMouseClicked(evt);
+            }
+        });
         ServiceComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ServiceComboBoxActionPerformed(evt);
@@ -91,6 +181,11 @@ public class Home extends javax.swing.JFrame {
         DataTextField.setBackground(new java.awt.Color(66, 66, 71));
         DataTextField.setForeground(new java.awt.Color(255, 255, 255));
         DataTextField.setText("Data:");
+        DataTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DataTextFieldMouseClicked(evt);
+            }
+        });
         DataTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DataTextFieldActionPerformed(evt);
@@ -100,6 +195,16 @@ public class Home extends javax.swing.JFrame {
         HourTextField.setBackground(new java.awt.Color(66, 66, 71));
         HourTextField.setForeground(new java.awt.Color(255, 255, 255));
         HourTextField.setText("Hora:");
+        HourTextField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HourTextFieldMouseClicked(evt);
+            }
+        });
+        HourTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HourTextFieldActionPerformed(evt);
+            }
+        });
 
         WatchIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/watch-icon.png"))); // NOI18N
 
@@ -112,7 +217,10 @@ public class Home extends javax.swing.JFrame {
         ObsTextArea.setColumns(20);
         ObsTextArea.setRows(5);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dollar-sign-icon.png"))); // NOI18N
+        cutValueLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        cutValueLabel.setForeground(new java.awt.Color(255, 255, 255));
+        cutValueLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dollar-sign-icon.png"))); // NOI18N
+        cutValueLabel.setText("0,00");
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
@@ -159,13 +267,10 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(Title)
                 .addGap(179, 179, 179))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(271, 271, 271)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(308, 308, 308)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(303, 303, 303)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cutValueLabel)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -194,7 +299,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(ObsTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel1)
+                .addComponent(cutValueLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
@@ -268,6 +373,11 @@ public class Home extends javax.swing.JFrame {
         NewScheduleButton.setText("Fazer um novo agendamento");
         NewScheduleButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(9, 9, 10), 12, true));
         NewScheduleButton.setCaretColor(new java.awt.Color(9, 9, 10));
+        NewScheduleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewScheduleButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(NewScheduleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 220, 40));
 
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-small.png"))); // NOI18N
@@ -301,21 +411,21 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_ProfileActionPerformed
 
     private void MyScheduleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MyScheduleMouseClicked
-                Meus_agendamentos exibir = new Meus_agendamentos();
-                exibir.setVisible(true);
-                setVisible(false);
+        Meus_agendamentos exibir = new Meus_agendamentos();
+        exibir.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_MyScheduleMouseClicked
 
     private void BarberComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BarberComboBoxActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_BarberComboBoxActionPerformed
 
     private void ServiceComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceComboBoxActionPerformed
-        // TODO add your handling code here:
+        alterCutValueByServiceId();
     }//GEN-LAST:event_ServiceComboBoxActionPerformed
 
     private void DataTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataTextFieldActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_DataTextFieldActionPerformed
 
     private void LogoutIconMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutIconMouseMoved
@@ -325,14 +435,42 @@ public class Home extends javax.swing.JFrame {
     private void LogoutIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutIconMouseClicked
         // TODO add your handling code here:
         Login exibir = new Login();
-                exibir.setVisible(true);
-                setVisible(false);
+        exibir.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_LogoutIconMouseClicked
 
     private void MyScheduleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MyScheduleActionPerformed
         // TODO add your handling code here:
          
     }//GEN-LAST:event_MyScheduleActionPerformed
+
+    private void NewScheduleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewScheduleButtonActionPerformed
+
+    }//GEN-LAST:event_NewScheduleButtonActionPerformed
+
+    private void HourTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HourTextFieldActionPerformed
+        
+    }//GEN-LAST:event_HourTextFieldActionPerformed
+
+    private void BarberComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BarberComboBoxMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BarberComboBoxMouseClicked
+
+    private void DataTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataTextFieldMouseClicked
+        if (DataTextField.getText() == "Data:") {
+            DataTextField.setText("");
+        }
+    }//GEN-LAST:event_DataTextFieldMouseClicked
+
+    private void HourTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HourTextFieldMouseClicked
+        if (HourTextField.getText() == "Hora:") {
+            HourTextField.setText("");
+        }
+    }//GEN-LAST:event_HourTextFieldMouseClicked
+
+    private void ServiceComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ServiceComboBoxMouseClicked
+
+    }//GEN-LAST:event_ServiceComboBoxMouseClicked
 
     /**
      * @param args the command line arguments
@@ -390,8 +528,8 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel SidebarBackground;
     private javax.swing.JLabel Title;
     private javax.swing.JLabel WatchIcon;
+    private javax.swing.JLabel cutValueLabel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
