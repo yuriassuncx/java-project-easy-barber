@@ -57,7 +57,6 @@ public class Admin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         SchedulesButton = new javax.swing.JButton();
         FinnancesButton = new javax.swing.JButton();
-        NewBarbers = new javax.swing.JButton();
         MyProfileButton = new javax.swing.JButton();
         Logo = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
@@ -226,13 +225,8 @@ public class Admin extends javax.swing.JFrame {
 
         FinnancesButton.setBackground(new java.awt.Color(9, 9, 10));
         FinnancesButton.setForeground(new java.awt.Color(255, 255, 255));
-        FinnancesButton.setText("Finanças");
+        FinnancesButton.setText("Painel de Controle");
         jPanel1.add(FinnancesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
-
-        NewBarbers.setBackground(new java.awt.Color(9, 9, 10));
-        NewBarbers.setForeground(new java.awt.Color(255, 255, 255));
-        NewBarbers.setText("Gerenciar Barbeiro");
-        jPanel1.add(NewBarbers, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 220, 40));
 
         MyProfileButton.setBackground(new java.awt.Color(9, 9, 10));
         MyProfileButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -323,7 +317,6 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JLabel LogoutIcon;
     private javax.swing.JLabel MenuText;
     private javax.swing.JButton MyProfileButton;
-    private javax.swing.JButton NewBarbers;
     private javax.swing.JLabel ProfileIcon;
     private javax.swing.JButton SchedulesButton;
     private javax.swing.JLabel SidebarBackground;

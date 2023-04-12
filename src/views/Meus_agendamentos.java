@@ -52,12 +52,13 @@ public class Meus_agendamentos extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        NewScheduleButton1 = new javax.swing.JButton();
+        UserSchedulesButton1 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        ProfileIcon = new javax.swing.JLabel();
+        MyProfileButton = new javax.swing.JButton();
         LogoutIcon = new javax.swing.JLabel();
         MenuText = new javax.swing.JLabel();
-        ProfileIcon = new javax.swing.JLabel();
-        Profile = new javax.swing.JTextField();
-        MySchedule = new javax.swing.JTextField();
-        NewScheduleButton = new javax.swing.JTextField();
         Logo = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
         SidebarBackground = new javax.swing.JLabel();
@@ -196,6 +197,29 @@ public class Meus_agendamentos extends javax.swing.JFrame {
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 640, 500));
 
+        NewScheduleButton1.setBackground(new java.awt.Color(9, 9, 10));
+        NewScheduleButton1.setForeground(new java.awt.Color(255, 255, 255));
+        NewScheduleButton1.setText("Fazer um novo agendamento");
+        jPanel1.add(NewScheduleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 220, 40));
+
+        UserSchedulesButton1.setBackground(new java.awt.Color(9, 9, 10));
+        UserSchedulesButton1.setForeground(new java.awt.Color(255, 255, 255));
+        UserSchedulesButton1.setText("Meus Agendamentos");
+        jPanel1.add(UserSchedulesButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
+
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Yuri Assunção");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 586, 110, 20));
+
+        ProfileIcon.setForeground(new java.awt.Color(153, 153, 153));
+        ProfileIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-button-icon.png"))); // NOI18N
+        ProfileIcon.setText("Profile");
+        jPanel1.add(ProfileIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 40, -1));
+
+        MyProfileButton.setBackground(new java.awt.Color(9, 9, 10));
+        MyProfileButton.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(MyProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 190, 50));
+
         LogoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout-icon.png"))); // NOI18N
         jPanel1.add(LogoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 580, -1, -1));
 
@@ -204,50 +228,6 @@ public class Meus_agendamentos extends javax.swing.JFrame {
         MenuText.setForeground(new java.awt.Color(255, 255, 255));
         MenuText.setText("Menu");
         jPanel1.add(MenuText, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
-
-        ProfileIcon.setForeground(new java.awt.Color(153, 153, 153));
-        ProfileIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-button-icon.png"))); // NOI18N
-        ProfileIcon.setText("Profile");
-        jPanel1.add(ProfileIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 40, -1));
-
-        Profile.setEditable(false);
-        Profile.setBackground(new java.awt.Color(9, 9, 10));
-        Profile.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        Profile.setForeground(new java.awt.Color(141, 141, 153));
-        Profile.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        Profile.setText("Yuri Assunção");
-        Profile.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(9, 9, 10), 12, true));
-        Profile.setCaretColor(new java.awt.Color(9, 9, 10));
-        Profile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ProfileActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Profile, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 190, 50));
-
-        MySchedule.setEditable(false);
-        MySchedule.setBackground(new java.awt.Color(9, 9, 10));
-        MySchedule.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        MySchedule.setForeground(new java.awt.Color(255, 255, 255));
-        MySchedule.setText("Meus Agendamentos");
-        MySchedule.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(9, 9, 10), 12, true));
-        MySchedule.setCaretColor(new java.awt.Color(9, 9, 10));
-        MySchedule.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                MyScheduleMouseClicked(evt);
-            }
-        });
-        jPanel1.add(MySchedule, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
-
-        NewScheduleButton.setEditable(false);
-        NewScheduleButton.setBackground(new java.awt.Color(9, 9, 10));
-        NewScheduleButton.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        NewScheduleButton.setForeground(new java.awt.Color(255, 255, 255));
-        NewScheduleButton.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        NewScheduleButton.setText("Fazer um novo agendamento");
-        NewScheduleButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(9, 9, 10), 12, true));
-        NewScheduleButton.setCaretColor(new java.awt.Color(9, 9, 10));
-        jPanel1.add(NewScheduleButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 220, 40));
 
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-small.png"))); // NOI18N
         jPanel1.add(Logo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, -1, -1));
@@ -287,14 +267,6 @@ public class Meus_agendamentos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void ProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProfileActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ProfileActionPerformed
-
-    private void MyScheduleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MyScheduleMouseClicked
-        
-    }//GEN-LAST:event_MyScheduleMouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         
@@ -349,11 +321,11 @@ public class Meus_agendamentos extends javax.swing.JFrame {
     private javax.swing.JLabel Logo;
     private javax.swing.JLabel LogoutIcon;
     private javax.swing.JLabel MenuText;
-    private javax.swing.JTextField MySchedule;
-    private javax.swing.JTextField NewScheduleButton;
-    private javax.swing.JTextField Profile;
+    private javax.swing.JButton MyProfileButton;
+    private javax.swing.JButton NewScheduleButton1;
     private javax.swing.JLabel ProfileIcon;
     private javax.swing.JLabel SidebarBackground;
+    private javax.swing.JButton UserSchedulesButton1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -371,6 +343,7 @@ public class Meus_agendamentos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

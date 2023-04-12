@@ -81,7 +81,7 @@ public class Profile extends javax.swing.JFrame {
 
         UserSchedulesButton1.setBackground(new java.awt.Color(9, 9, 10));
         UserSchedulesButton1.setForeground(new java.awt.Color(255, 255, 255));
-        UserSchedulesButton1.setText("Fazer um novo agendamento");
+        UserSchedulesButton1.setText("Meus Agendamentos");
         jPanel1.add(UserSchedulesButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
 
         MyProfileButton.setBackground(new java.awt.Color(9, 9, 10));

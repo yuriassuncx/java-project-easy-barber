@@ -10,12 +10,12 @@ import java.awt.Color;
  *
  * @author Fábio
  */
-public class Finanças extends javax.swing.JFrame {
+public class Gerenciamento_equipe extends javax.swing.JFrame {
 
     /**
      * Creates new form Home
      */
-    public Finanças() {
+    public Gerenciamento_equipe() {
         initComponents();
     }
 
@@ -31,27 +31,14 @@ public class Finanças extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jSeparator3 = new javax.swing.JSeparator();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
         SchedulesButton = new javax.swing.JButton();
         FinnancesButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -71,83 +58,43 @@ public class Finanças extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Javanese Text", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Finanças");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 0, -1, 60));
+        jLabel1.setText("Gerenciamento de Equipe");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, -1, 60));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel6.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 380, 30));
 
         jLabel28.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
         jLabel28.setText("Total:");
-        jPanel6.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, 50));
+        jPanel6.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, -1, 50));
 
         jLabel29.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
         jLabel29.setText("R$ 150,00");
-        jPanel6.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, -1, 60));
+        jPanel6.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, -1, 60));
 
         jLabel30.setFont(new java.awt.Font("Javanese Text", 1, 18)); // NOI18N
         jLabel30.setText("Matheus Messias");
         jPanel6.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 60));
-
-        jLabel31.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel31.setText("R$ 50,00");
-        jPanel6.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, -1, 60));
-
-        jLabel32.setFont(new java.awt.Font("Javanese Text", 1, 18)); // NOI18N
-        jLabel32.setText("Matheus Messias");
-        jPanel6.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 60));
-        jPanel6.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 380, 30));
-
-        jLabel33.setFont(new java.awt.Font("Javanese Text", 1, 18)); // NOI18N
-        jLabel33.setText("Matheus Messias");
-        jPanel6.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 60));
-
-        jLabel34.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel34.setText("R$ 50,00");
-        jPanel6.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, 60));
-        jPanel6.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 380, 30));
+        jPanel6.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 270, 30));
 
         jLabel35.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
-        jLabel35.setText("Pendências");
-        jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, 60));
+        jLabel35.setText("Realizados");
+        jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 60));
 
-        jLabel36.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel36.setText("R$ 50,00");
-        jPanel6.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, 60));
-
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 420, 310));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 310, 550));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
-        jLabel8.setText("Lucros:");
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 60));
+        jLabel8.setText("Fulano Souza");
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 60));
 
         jLabel18.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel18.setText("R$ 5.840");
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, 60));
-        jPanel4.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 380, 30));
+        jLabel18.setText("Disponibilidade:");
+        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 60));
 
-        jLabel20.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
-        jLabel20.setText("Saldo:");
-        jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 60));
-
-        jLabel21.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel21.setText("R$ 9.640");
-        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, 60));
-        jPanel4.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 380, 30));
-
-        jLabel22.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
-        jLabel22.setText("Despesas:");
-        jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 60));
-
-        jLabel23.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel23.setText("R$ 3.800");
-        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, -1, 60));
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 420, 200));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 340, 200));
 
         SchedulesButton.setBackground(new java.awt.Color(9, 9, 10));
         SchedulesButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -246,14 +193,18 @@ public class Finanças extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Finanças.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gerenciamento_equipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Finanças.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gerenciamento_equipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Finanças.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gerenciamento_equipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Finanças.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gerenciamento_equipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -262,7 +213,7 @@ public class Finanças extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Finanças().setVisible(true);
+                new Gerenciamento_equipe().setVisible(true);
             }
         });
     }
@@ -280,28 +231,15 @@ public class Finanças extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     // End of variables declaration//GEN-END:variables
 }
