@@ -10,8 +10,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+
+import models.Agendamento;
+import models.AgendamentoDAO;
 
 /**
  *
@@ -19,7 +23,6 @@ import javax.swing.JOptionPane;
  */
 public class Home extends javax.swing.JFrame {
     
-    Vector<Integer> id_barber = new Vector<Integer>();
     /**
      * Creates new form Home
      */
@@ -40,7 +43,6 @@ public class Home extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery();
             
             while (rs.next()) {
-                id_barber.addElement(rs.getInt(1));
                 BarberComboBox.addItem(rs.getString(2));
             }
             
@@ -62,7 +64,6 @@ public class Home extends javax.swing.JFrame {
             ResultSet rs = stmt.executeQuery();
             
             while (rs.next()) {
-                id_barber.addElement(rs.getInt(1));
                 ServiceComboBox.addItem(rs.getString(2));
             }
             
@@ -216,6 +217,7 @@ public class Home extends javax.swing.JFrame {
 
         ObsTextArea.setBackground(new java.awt.Color(66, 66, 71));
         ObsTextArea.setColumns(20);
+        ObsTextArea.setForeground(new java.awt.Color(255, 255, 255));
         ObsTextArea.setRows(5);
 
         cutValueLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -228,6 +230,11 @@ public class Home extends javax.swing.JFrame {
         jButton1.setText("Agendar");
         jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 3, true));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -401,6 +408,29 @@ public class Home extends javax.swing.JFrame {
     private void ServiceComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ServiceComboBoxMouseClicked
 
     }//GEN-LAST:event_ServiceComboBoxMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Agendamento agenda = new Agendamento();
+        AgendamentoDAO dao = new AgendamentoDAO();
+        
+        agenda.setBarbeiro((String) BarberComboBox.getSelectedItem());
+        agenda.setServico((String) ServiceComboBox.getSelectedItem());
+        agenda.setData_agend(DataTextField.getText());
+        agenda.setHora_agend(HourTextField.getText());
+        agenda.setObservacao(ObsTextArea.getText());
+        
+        try {
+            dao.create(agenda);
+            
+            BarberComboBox.setSelectedItem(0);
+            ServiceComboBox.setSelectedItem(0);
+            DataTextField.setText("");
+            HourTextField.setText("");
+            ObsTextArea.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

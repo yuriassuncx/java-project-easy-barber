@@ -11,7 +11,7 @@ public class Conexao {
             //ativando o drive de conexao
             Class.forName("com.mysql.cj.jdbc.Driver");
             
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/db?autoReconnect=true&useSSL=false","root","@Yuri123");
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/teste?autoReconnect=true&useSSL=false","root","@Yuri123");
             //return DriverManager.getConnection(caminho,usuario,senha);
                     
         } catch (ClassNotFoundException e) {
