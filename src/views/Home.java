@@ -422,8 +422,8 @@ public class Home extends javax.swing.JFrame {
         try {
             dao.create(agenda);
             
-            BarberComboBox.setSelectedItem(0);
-            ServiceComboBox.setSelectedItem(0);
+            BarberComboBox.setSelectedItem(null);
+            ServiceComboBox.setSelectedItem(null);
             DataTextField.setText("");
             HourTextField.setText("");
             ObsTextArea.setText("");

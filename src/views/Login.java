@@ -158,7 +158,7 @@ public class Login extends javax.swing.JFrame {
                 ResultSet rs = stmt.executeQuery();
 
                 if(rs.next()){
-                    Admin exibir = new Admin();
+                    Painel_controle exibir = new Painel_controle();
                     exibir.setVisible(true);
                     setVisible(false);
                 } else {
@@ -200,8 +200,8 @@ public class Login extends javax.swing.JFrame {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
         Cadastro exibir = new Cadastro();
-                exibir.setVisible(true);
-                setVisible(false);
+        exibir.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void pfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfSenhaActionPerformed
@@ -209,13 +209,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_pfSenhaActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        if (jCheckBox1.isSelected()) {
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    new Admin().setVisible(true);
-                }
-            });            
-        }
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed

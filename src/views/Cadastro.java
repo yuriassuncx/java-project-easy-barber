@@ -85,6 +85,11 @@ public class Cadastro extends javax.swing.JFrame {
         jButton1.setText("Cadastrar");
         jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jButton1StateChanged(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -149,7 +154,6 @@ public class Cadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_tfEmailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         try {
             Connection con = Conexao.faz_conexao();
             
@@ -161,11 +165,19 @@ public class Cadastro extends javax.swing.JFrame {
             stmt.setString(2,tfEmail.getText());
             stmt.setString(3, new String (pfSenha.getPassword()));
             
-            stmt.execute();
+            if (tfNome.getText().length() == 0 || tfEmail.getText().length() == 0 || pfSenha.getText().length() == 0) {
+                JOptionPane.showMessageDialog(null, "Você deve preencher todos os campos!");
+                stmt.close();
+            } else {
+                stmt.execute();
+                JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
+            }
+            
             
             stmt.close();
             con.close();
-            JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
+            
+
             tfNome.setText("");
             tfEmail.setText("");
             pfSenha.setText("");
@@ -188,6 +200,10 @@ public class Cadastro extends javax.swing.JFrame {
     private void pfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pfSenhaActionPerformed
+
+    private void jButton1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jButton1StateChanged
+
+    }//GEN-LAST:event_jButton1StateChanged
 
     /**
      * @param args the command line arguments

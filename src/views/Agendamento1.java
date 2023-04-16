@@ -37,7 +37,6 @@ public class Agendamento1 extends javax.swing.JFrame {
         AgendamentoDAO pdao = new AgendamentoDAO();
         
         for(Agendamento p: pdao.read()){
-            
             modelo.addRow(new Object[]{
                 p.getBarbeiro(),
                 p.getServico(),
@@ -85,7 +84,7 @@ public class Agendamento1 extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel1.setText("Minha Agenda");
+        jLabel1.setText("Agendamentos");
 
         jtAgenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

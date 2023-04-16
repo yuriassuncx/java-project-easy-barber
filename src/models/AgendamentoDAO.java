@@ -50,7 +50,6 @@ public class AgendamentoDAO {
         List<Agendamento> agendas = new ArrayList<>();
     
         try {
-               
             stmt = con.prepareStatement("SELECT * FROM agendamento");
             rs = stmt.executeQuery();
             
@@ -65,15 +64,14 @@ public class AgendamentoDAO {
                 agendas.add(tbAgendamento);
            } 
              
-        stmt.close();
-        rs.close();
-        con.close();
+            stmt.close();
+            rs.close();
+            con.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro");
         } 
 
         return agendas;
-    
     }
     
     public void update(Agendamento agenda) throws SQLException{
