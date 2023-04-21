@@ -16,16 +16,17 @@ import javax.swing.JOptionPane;
 
 import models.Agendamento;
 import models.AgendamentoDAO;
+import models.Session;
 
 /**
  *
  * @author Fábio
  */
 public class Home extends javax.swing.JFrame {
+    Session session = Session.getInstance();
+    int userId = session.getUserId();
+    String userName = session.getUserName();
     
-    /**
-     * Creates new form Home
-     */
     public Home() {
         initComponents();
         getAllBarbers();
@@ -332,7 +333,7 @@ public class Home extends javax.swing.JFrame {
         jPanel1.add(UserSchedulesButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Yuri Assunção");
+        jLabel2.setText(userName);
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 586, 110, 20));
 
         ProfileIcon.setForeground(new java.awt.Color(153, 153, 153));

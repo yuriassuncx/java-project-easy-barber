@@ -11,6 +11,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import models.Session;
+
+import models.User;
+import models.UserDAO;
 
 
 public class Login extends javax.swing.JFrame {
@@ -168,32 +172,29 @@ public class Login extends javax.swing.JFrame {
                 stmt.close();
                 con.close();
             } else {
-                String sql = "SELECT * FROM user WHERE name=? AND password=?";
-            
-                PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setString(1, tfUsuario.getText());
-                stmt.setString(2, pfSenha.getText());
-
-
-                ResultSet rs = stmt.executeQuery();
-
-                if(rs.next()){
+                String email = tfUsuario.getText();
+                String password = pfSenha.getText();   
+                
+                UserDAO userDao = new UserDAO();
+                User user = userDao.authenticate(email, password);
+                
+                if (user != null) {
+                    Session session = Session.getInstance();
+                    session.setUserId(user.getId());
+                    session.setUserName(user.getName());
+                    
+                    JOptionPane.showMessageDialog(null, "Logado!");
                     Home exibir = new Home();
                     exibir.setVisible(true);
                     setVisible(false);
-
-
                 } else {
-                    JOptionPane.showMessageDialog(null, "Usuario/Senha incorreto");
+                    JOptionPane.showMessageDialog(null, "Algum campo foi inserido incorretamente!");
                 }
-
-                stmt.close();
-                con.close();
             }
         } 
         
         catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Algo de errado aconteceu!");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

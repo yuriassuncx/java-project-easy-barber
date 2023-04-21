@@ -154,10 +154,16 @@ public class Cadastro extends javax.swing.JFrame {
     }//GEN-LAST:event_tfEmailActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (tfNome.getText().length() == 0 || tfEmail.getText().length() == 0 || pfSenha.getText().length() == 0) {
+            JOptionPane.showMessageDialog(null, "Você deve preencher todos os campos!");
+            
+            return;
+        }
+        
         try {
             Connection con = Conexao.faz_conexao();
             
-            String sql = "INSERT INTO user(name, username, password) VALUES (?,?,?)";
+            String sql = "INSERT INTO user(name, email, password) VALUES (?,?,?)";
             
             PreparedStatement stmt = con.prepareStatement(sql);
             
@@ -165,14 +171,8 @@ public class Cadastro extends javax.swing.JFrame {
             stmt.setString(2,tfEmail.getText());
             stmt.setString(3, new String (pfSenha.getPassword()));
             
-            if (tfNome.getText().length() == 0 || tfEmail.getText().length() == 0 || pfSenha.getText().length() == 0) {
-                JOptionPane.showMessageDialog(null, "Você deve preencher todos os campos!");
-                stmt.close();
-            } else {
-                stmt.execute();
-                JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
-            }
-            
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
             
             stmt.close();
             con.close();
@@ -181,7 +181,6 @@ public class Cadastro extends javax.swing.JFrame {
             tfNome.setText("");
             tfEmail.setText("");
             pfSenha.setText("");
-            
         } catch (SQLException e) {
             e.printStackTrace();
         }
