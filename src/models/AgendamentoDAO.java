@@ -15,23 +15,35 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class AgendamentoDAO {
-    
-    public void create(Agendamento agenda) throws SQLException{
-  
+    public void create(Agendamento agenda) throws SQLException {
       try {
         Connection con = Conexao.faz_conexao();
+        
+        // Verifica se já existe um agendamento com a mesma data e hora
+        String query = "SELECT COUNT(*) FROM agendamento WHERE data_agend = ? AND hora_agend = ? AND barbeiro = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, agenda.getData_agend());
+        stmt.setString(2, agenda.getHora_agend());
+        stmt.setString(3, agenda.getBarbeiro());
+        ResultSet rs = stmt.executeQuery();
+        rs.next();
+        int count = rs.getInt(1);
+        
+        if (count > 0) {
+            JOptionPane.showMessageDialog(null, "Essa data e hora já estão ocupadas!");
+            return;
+        }
 
-        String sql = "INSERT INTO agendamento (barbeiro , servico , data_agend , hora_agend , observacao) values (?,?,?,?,?)";
-
-        PreparedStatement stmt = con.prepareStatement(sql);
-            
-        stmt.setString(1,agenda.getBarbeiro());
-        stmt.setString(2,agenda.getServico());
-        stmt.setString(3,agenda.getData_agend());
-        stmt.setString(4,agenda.getHora_agend());
-        stmt.setString(5,agenda.getObservacao());
-            
-        stmt.execute();
+        // Cria o agendamento
+        query = "INSERT INTO agendamento (barbeiro, servico, data_agend, hora_agend, observacao, preco) VALUES (?, ?, ?, ?, ?, ?)";
+        stmt = con.prepareStatement(query);
+        stmt.setString(1, agenda.getBarbeiro());
+        stmt.setString(2, agenda.getServico());
+        stmt.setString(3, agenda.getData_agend());
+        stmt.setString(4, agenda.getHora_agend());
+        stmt.setString(5, agenda.getObservacao());
+        stmt.setInt(6, agenda.getPreco());
+        stmt.executeUpdate();
            
         JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
         con.close();
@@ -41,7 +53,7 @@ public class AgendamentoDAO {
       }   
     }
     
-    public List<Agendamento> read() throws SQLException{
+    public List<Agendamento> read() throws SQLException {
     
         Connection con = Conexao.faz_conexao();
         PreparedStatement stmt = null;
@@ -61,6 +73,7 @@ public class AgendamentoDAO {
                 tbAgendamento.setData_agend(rs.getString("data_agend"));
                 tbAgendamento.setHora_agend(rs.getString("hora_agend"));
                 tbAgendamento.setObservacao(rs.getString("observacao"));
+                tbAgendamento.setPreco(rs.getInt("preco"));
                 agendas.add(tbAgendamento);
            } 
              
@@ -75,30 +88,27 @@ public class AgendamentoDAO {
     }
     
     public void update(Agendamento agenda) throws SQLException{
-  
       try {
-            Connection con = Conexao.faz_conexao();
+        Connection con = Conexao.faz_conexao();
             
-            String sql = "UPDATE agendamento SET barbeiro = ?,servico = ?,data_agend = ?,hora_agend = ?,observacao = ? WHERE id = ?)";
-            
-            PreparedStatement stmt = con.prepareStatement(sql);
-            
-           stmt.setString(1,agenda.getBarbeiro());
-           stmt.setString(2,agenda.getServico());
-           stmt.setString(3,agenda.getData_agend());
-           stmt.setString(4,agenda.getHora_agend());
-           stmt.setString(5,agenda.getObservacao());
-           stmt.setInt(4,agenda.getId());
-            
-           stmt.execute();
-            
-            
-           
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
-            con.close();
-            stmt.close();
+        String sql = "UPDATE agendamento SET barbeiro = ?, servico = ?, data_agend = ?, hora_agend = ?, observacao = ? WHERE id = ?)";
+
+        PreparedStatement stmt = con.prepareStatement(sql);
+
+        stmt.setString(1,agenda.getBarbeiro());
+        stmt.setString(2,agenda.getServico());
+        stmt.setString(3,agenda.getData_agend());
+        stmt.setString(4,agenda.getHora_agend());
+        stmt.setString(5,agenda.getObservacao());
+        stmt.setInt(4,agenda.getId());
+
+        stmt.execute();
+
+        JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+        con.close();
+        stmt.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro");
-      }   
+        }   
     }
 }

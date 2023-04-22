@@ -4,14 +4,11 @@
  */
 package views;
 
-import java.awt.Color;
-import javax.swing.JOptionPane;
 import models.Session;
 
 
 public class Profile extends javax.swing.JFrame {
     Session session = Session.getInstance();
-    int userId = session.getUserId();
     String userName = session.getUserName();
     
     public Profile() {
@@ -70,21 +67,36 @@ public class Profile extends javax.swing.JFrame {
         jPanel1.add(ProfileIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 40, -1));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Yuri Assunção");
+        jLabel2.setText(userName);
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 586, 110, 20));
 
         NewScheduleButton1.setBackground(new java.awt.Color(9, 9, 10));
         NewScheduleButton1.setForeground(new java.awt.Color(255, 255, 255));
         NewScheduleButton1.setText("Fazer um novo agendamento");
+        NewScheduleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewScheduleButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(NewScheduleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 220, 40));
 
         UserSchedulesButton1.setBackground(new java.awt.Color(9, 9, 10));
         UserSchedulesButton1.setForeground(new java.awt.Color(255, 255, 255));
         UserSchedulesButton1.setText("Meus Agendamentos");
+        UserSchedulesButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserSchedulesButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(UserSchedulesButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
 
         MyProfileButton.setBackground(new java.awt.Color(9, 9, 10));
         MyProfileButton.setForeground(new java.awt.Color(255, 255, 255));
+        MyProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MyProfileButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(MyProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 190, 50));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -223,6 +235,20 @@ public class Profile extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void MyProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MyProfileButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MyProfileButtonActionPerformed
+
+    private void NewScheduleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewScheduleButton1ActionPerformed
+        setVisible(false);
+        new Home().setVisible(true);
+    }//GEN-LAST:event_NewScheduleButton1ActionPerformed
+
+    private void UserSchedulesButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserSchedulesButton1ActionPerformed
+        setVisible(false);
+        new Meus_agendamentos().setVisible(true);
+    }//GEN-LAST:event_UserSchedulesButton1ActionPerformed
 
     /**
      * @param args the command line arguments

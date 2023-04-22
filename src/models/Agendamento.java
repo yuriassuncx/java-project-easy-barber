@@ -14,6 +14,7 @@ public class Agendamento {
     private String data_agend;
     private String hora_agend;
     private String observacao;
+    private int preco;
     private int id;
 
     public String getBarbeiro() {
@@ -55,6 +56,14 @@ public class Agendamento {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+    
+    public int getPreco() {
+        return preco;
+    }
+
+    public void setPreco(int preco) {
+        this.preco = preco;
+    } 
 
     public int getId() {
         return id;

@@ -5,16 +5,16 @@
 package views;
 
 import java.awt.Color;
+import models.Session;
 
 /**
  *
  * @author Fábio
  */
 public class Meus_agendamentos extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Home
-     */
+    Session session = Session.getInstance();
+    String userName = session.getUserName();
+    
     public Meus_agendamentos() {
         initComponents();
     }
@@ -200,6 +200,11 @@ public class Meus_agendamentos extends javax.swing.JFrame {
         NewScheduleButton1.setBackground(new java.awt.Color(9, 9, 10));
         NewScheduleButton1.setForeground(new java.awt.Color(255, 255, 255));
         NewScheduleButton1.setText("Fazer um novo agendamento");
+        NewScheduleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewScheduleButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(NewScheduleButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 220, 40));
 
         UserSchedulesButton1.setBackground(new java.awt.Color(9, 9, 10));
@@ -208,7 +213,7 @@ public class Meus_agendamentos extends javax.swing.JFrame {
         jPanel1.add(UserSchedulesButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
 
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Yuri Assunção");
+        jLabel7.setText(userName);
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 586, 110, 20));
 
         ProfileIcon.setForeground(new java.awt.Color(153, 153, 153));
@@ -279,6 +284,11 @@ public class Meus_agendamentos extends javax.swing.JFrame {
             jPanel5.setSize(640, 60);
         }
     }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void NewScheduleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewScheduleButton1ActionPerformed
+        setVisible(false);
+        new Home().setVisible(true);
+    }//GEN-LAST:event_NewScheduleButton1ActionPerformed
 
     /**
      * @param args the command line arguments

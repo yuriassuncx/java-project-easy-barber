@@ -5,11 +5,15 @@
 package views;
 
 import database.Conexao;
-import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,19 +22,16 @@ import models.Agendamento;
 import models.AgendamentoDAO;
 import models.Session;
 
-/**
- *
- * @author Fábio
- */
+
 public class Home extends javax.swing.JFrame {
     Session session = Session.getInstance();
-    int userId = session.getUserId();
     String userName = session.getUserName();
     
     public Home() {
         initComponents();
         getAllBarbers();
         getAllServices();
+        getDates();
     }
     
     private void getAllBarbers() {
@@ -75,6 +76,66 @@ public class Home extends javax.swing.JFrame {
         }
     }
     
+    private void getDates() {
+        String[] datas = new String[32];
+        
+        Calendar calendar = Calendar.getInstance();
+        
+        datas[0] = new SimpleDateFormat("dd/MM/yyyy").format(calendar.getTime());
+        
+        for (int i = 0; i <= 31; i++) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            datas[i] = new SimpleDateFormat("dd/MM/yyyy").format(calendar.getTime());
+        }
+        
+        // Limpa o ComboBox de horários antes de adicioná-los novamente
+        DateComboBox.removeAllItems();
+        
+        for (String data : datas) {
+            DateComboBox.addItem(data);
+        }
+    }   
+    
+    private void getAvailableHours() throws SQLException {       
+        // Horários disponíveis das 8h às 23h
+        String[] horarios = {"08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"};
+
+        try {
+            Connection con = Conexao.faz_conexao();
+
+            String sql = "SELECT hora_agend FROM agendamento WHERE data_agend = ? AND barbeiro = ?";
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setString(1, (String) DateComboBox.getSelectedItem());
+            stmt.setString(2, (String) BarberComboBox.getSelectedItem());
+
+            ResultSet rs = stmt.executeQuery();
+
+            // Cria uma nova lista de horários disponíveis
+            List<String> horariosDisponiveis = new ArrayList(Arrays.asList(horarios));
+
+            // Percorre os horários já agendados para removê-los dos horários disponíveis
+            while (rs.next()) {
+                String horaAgendada = rs.getString("hora_agend");
+                horariosDisponiveis.remove(horaAgendada);
+            }
+
+            // Limpa o ComboBox de horários antes de adicioná-los novamente
+            HourComboBox.removeAllItems();
+
+            // Adiciona os horários disponíveis no ComboBox
+            for (String horario : horariosDisponiveis) {
+                HourComboBox.addItem(horario);
+            }
+
+            stmt.close();
+            con.close();
+        } catch (SQLException ex) {
+            throw new SQLException("Erro ao buscar horários disponíveis para agendamento", ex);
+        }
+    }
+    
     private void alterCutValueByServiceId() {        
         String serviceName = (String) ServiceComboBox.getSelectedItem();
         
@@ -114,12 +175,12 @@ public class Home extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         Title = new javax.swing.JLabel();
         BarberComboBox = new javax.swing.JComboBox<>();
-        ScissorsIcon = new javax.swing.JLabel();
+        HourComboBox = new javax.swing.JComboBox<>();
+        DateComboBox = new javax.swing.JComboBox<>();
         ServiceComboBox = new javax.swing.JComboBox<>();
+        ScissorsIcon = new javax.swing.JLabel();
         EditIcon = new javax.swing.JLabel();
         ClipboardIcon = new javax.swing.JLabel();
-        DataTextField = new javax.swing.JTextField();
-        HourTextField = new javax.swing.JTextField();
         WatchIcon = new javax.swing.JLabel();
         Obs = new javax.swing.JLabel();
         ObsTextArea = new javax.swing.JTextArea();
@@ -161,7 +222,39 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        ScissorsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/scissors-icon.png"))); // NOI18N
+        HourComboBox.setBackground(new java.awt.Color(66, 66, 71));
+        HourComboBox.setForeground(new java.awt.Color(255, 255, 255));
+        HourComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolher um horário" }));
+        HourComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                HourComboBoxMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                HourComboBoxMousePressed(evt);
+            }
+        });
+        HourComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HourComboBoxActionPerformed(evt);
+            }
+        });
+
+        DateComboBox.setBackground(new java.awt.Color(66, 66, 71));
+        DateComboBox.setForeground(new java.awt.Color(255, 255, 255));
+        DateComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolher uma data" }));
+        DateComboBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DateComboBoxMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                DateComboBoxMousePressed(evt);
+            }
+        });
+        DateComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DateComboBoxActionPerformed(evt);
+            }
+        });
 
         ServiceComboBox.setBackground(new java.awt.Color(66, 66, 71));
         ServiceComboBox.setForeground(new java.awt.Color(255, 255, 255));
@@ -177,37 +270,11 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        ScissorsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/scissors-icon.png"))); // NOI18N
+
         EditIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit-icon.png"))); // NOI18N
 
         ClipboardIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clipboard-icon.png"))); // NOI18N
-
-        DataTextField.setBackground(new java.awt.Color(66, 66, 71));
-        DataTextField.setForeground(new java.awt.Color(255, 255, 255));
-        DataTextField.setText("Data:");
-        DataTextField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DataTextFieldMouseClicked(evt);
-            }
-        });
-        DataTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DataTextFieldActionPerformed(evt);
-            }
-        });
-
-        HourTextField.setBackground(new java.awt.Color(66, 66, 71));
-        HourTextField.setForeground(new java.awt.Color(255, 255, 255));
-        HourTextField.setText("Hora:");
-        HourTextField.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HourTextFieldMouseClicked(evt);
-            }
-        });
-        HourTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                HourTextFieldActionPerformed(evt);
-            }
-        });
 
         WatchIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/watch-icon.png"))); // NOI18N
 
@@ -245,19 +312,22 @@ public class Home extends javax.swing.JFrame {
                 .addGap(62, 62, 62)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(ScissorsIcon)
                                 .addGap(18, 18, 18)
                                 .addComponent(BarberComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(ClipboardIcon)
-                                .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Obs)
-                                    .addComponent(DataTextField))))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(Obs))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addGap(22, 22, 22)
+                                        .addComponent(DateComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(EditIcon)
                                 .addGap(18, 18, 18)
@@ -265,7 +335,7 @@ public class Home extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(WatchIcon)
                                 .addGap(18, 18, 18)
-                                .addComponent(HourTextField)))
+                                .addComponent(HourComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(96, 96, 96))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -296,13 +366,11 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(ServiceComboBox)
                         .addComponent(EditIcon)))
                 .addGap(47, 47, 47)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(ClipboardIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(DataTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(WatchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(HourTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(HourComboBox)
+                    .addComponent(ClipboardIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(WatchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DateComboBox))
                 .addGap(27, 27, 27)
                 .addComponent(Obs)
                 .addGap(18, 18, 18)
@@ -330,6 +398,11 @@ public class Home extends javax.swing.JFrame {
         UserSchedulesButton1.setBackground(new java.awt.Color(9, 9, 10));
         UserSchedulesButton1.setForeground(new java.awt.Color(255, 255, 255));
         UserSchedulesButton1.setText("Meus Agendamentos");
+        UserSchedulesButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserSchedulesButton1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(UserSchedulesButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -343,6 +416,11 @@ public class Home extends javax.swing.JFrame {
 
         MyProfileButton.setBackground(new java.awt.Color(9, 9, 10));
         MyProfileButton.setForeground(new java.awt.Color(255, 255, 255));
+        MyProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MyProfileButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(MyProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 190, 50));
 
         LogoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout-icon.png"))); // NOI18N
@@ -375,36 +453,22 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BarberComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BarberComboBoxActionPerformed
-        
+        if (DateComboBox.getSelectedItem() != null || BarberComboBox.getSelectedItem() != null) {
+            try {
+                getAvailableHours();
+            } catch (SQLException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_BarberComboBoxActionPerformed
 
     private void ServiceComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServiceComboBoxActionPerformed
         alterCutValueByServiceId();
     }//GEN-LAST:event_ServiceComboBoxActionPerformed
 
-    private void DataTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DataTextFieldActionPerformed
-        
-    }//GEN-LAST:event_DataTextFieldActionPerformed
-
-    private void HourTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HourTextFieldActionPerformed
-        
-    }//GEN-LAST:event_HourTextFieldActionPerformed
-
     private void BarberComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BarberComboBoxMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_BarberComboBoxMouseClicked
-
-    private void DataTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataTextFieldMouseClicked
-        if (DataTextField.getText().equals("Data:")) {
-            DataTextField.setText("");
-        }
-    }//GEN-LAST:event_DataTextFieldMouseClicked
-
-    private void HourTextFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HourTextFieldMouseClicked
-        if (HourTextField.getText().equals("Hora:")) {
-            HourTextField.setText("");
-        }
-    }//GEN-LAST:event_HourTextFieldMouseClicked
 
     private void ServiceComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ServiceComboBoxMouseClicked
 
@@ -414,24 +478,78 @@ public class Home extends javax.swing.JFrame {
         Agendamento agenda = new Agendamento();
         AgendamentoDAO dao = new AgendamentoDAO();
         
+        if ((String) BarberComboBox.getSelectedItem() == "Escolher um barbeiro") {
+            JOptionPane.showMessageDialog(null, "Você precisa escolher um barbeiro!");
+            
+            return;
+        }
+        
+        if ((String) ServiceComboBox.getSelectedItem() == "Escolher um serviço") {
+            JOptionPane.showMessageDialog(null, "Você precisa escolher um barbeiro!");
+            
+            return;
+        }
+        
         agenda.setBarbeiro((String) BarberComboBox.getSelectedItem());
         agenda.setServico((String) ServiceComboBox.getSelectedItem());
-        agenda.setData_agend(DataTextField.getText());
-        agenda.setHora_agend(HourTextField.getText());
+        agenda.setData_agend((String) DateComboBox.getSelectedItem());
+        agenda.setHora_agend((String) HourComboBox.getSelectedItem());
         agenda.setObservacao(ObsTextArea.getText());
+        agenda.setPreco(Integer.parseInt(cutValueLabel.getText()));
         
         try {
             dao.create(agenda);
             
             BarberComboBox.setSelectedItem(null);
             ServiceComboBox.setSelectedItem(null);
-            DataTextField.setText("");
-            HourTextField.setText("");
+            DateComboBox.setSelectedItem(null);
+            HourComboBox.setSelectedItem(null);
             ObsTextArea.setText("");
+            cutValueLabel.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void UserSchedulesButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserSchedulesButton1ActionPerformed
+        setVisible(false);
+        new Meus_agendamentos().setVisible(true);
+    }//GEN-LAST:event_UserSchedulesButton1ActionPerformed
+
+    private void MyProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MyProfileButtonActionPerformed
+        setVisible(false);
+        new Profile().setVisible(true);
+    }//GEN-LAST:event_MyProfileButtonActionPerformed
+
+    private void HourComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HourComboBoxActionPerformed
+        
+    }//GEN-LAST:event_HourComboBoxActionPerformed
+
+    private void HourComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HourComboBoxMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HourComboBoxMouseClicked
+
+    private void HourComboBoxMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HourComboBoxMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HourComboBoxMousePressed
+
+    private void DateComboBoxMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DateComboBoxMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DateComboBoxMouseClicked
+
+    private void DateComboBoxMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DateComboBoxMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DateComboBoxMousePressed
+
+    private void DateComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateComboBoxActionPerformed
+        if (DateComboBox.getSelectedItem() != null || BarberComboBox.getSelectedItem() != null) {
+            try {
+                getAvailableHours();
+            } catch (SQLException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_DateComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -472,9 +590,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel Background;
     private javax.swing.JComboBox<String> BarberComboBox;
     private javax.swing.JLabel ClipboardIcon;
-    private javax.swing.JTextField DataTextField;
+    private javax.swing.JComboBox<String> DateComboBox;
     private javax.swing.JLabel EditIcon;
-    private javax.swing.JTextField HourTextField;
+    private javax.swing.JComboBox<String> HourComboBox;
     private javax.swing.JLabel Logo;
     private javax.swing.JLabel LogoutIcon;
     private javax.swing.JLabel MenuText;

@@ -37,7 +37,8 @@ public class Agendamento1 extends javax.swing.JFrame {
                 p.getServico(),
                 p.getData_agend(),
                 p.getHora_agend(),
-                p.getObservacao()
+                p.getObservacao(),
+                p.getPreco()
             });
         }
     }
@@ -86,11 +87,11 @@ public class Agendamento1 extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Barbeiro", "Serviço", "Data", "Hora", "Observação"
+                "Barbeiro", "Serviço", "Data", "Hora", "Observação", "Preço"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
