@@ -10,12 +10,23 @@ package models;
  */
 public class Agendamento {
     private String barbeiro;
+    private String cliente;
+    private int barber_id;
+    private int user_id;
     private String servico;
     private String data_agend;
     private String hora_agend;
     private String observacao;
     private int preco;
     private int id;
+    
+    public int getBarberId() {
+        return barber_id;
+    }
+
+    public void setBarberId(int barber_id) {
+        this.barber_id = barber_id;
+    } 
 
     public String getBarbeiro() {
         return barbeiro;
@@ -23,6 +34,22 @@ public class Agendamento {
 
     public void setBarbeiro(String barbeiro) {
         this.barbeiro = barbeiro;
+    }
+    
+    public int getClienteId() {
+        return user_id;
+    }
+
+    public void setClienteId(int user_id) {
+        this.user_id = user_id;
+    } 
+    
+    public String getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(String cliente) {
+        this.cliente = cliente;
     }
 
     public String getServico() {

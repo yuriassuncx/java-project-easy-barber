@@ -25,6 +25,7 @@ import models.Session;
 
 public class Home extends javax.swing.JFrame {
     Session session = Session.getInstance();
+    int user_id = session.getUserId();
     String userName = session.getUserName();
     
     public Home() {
@@ -103,12 +104,12 @@ public class Home extends javax.swing.JFrame {
         try {
             Connection con = Conexao.faz_conexao();
 
-            String sql = "SELECT hora_agend FROM agendamento WHERE data_agend = ? AND barbeiro = ?";
+            String sql = "SELECT hora_agend FROM agendamento WHERE data_agend = ? AND barber_id = ?";
 
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setString(1, (String) DateComboBox.getSelectedItem());
-            stmt.setString(2, (String) BarberComboBox.getSelectedItem());
+            stmt.setInt(2, BarberComboBox.getSelectedIndex());
 
             ResultSet rs = stmt.executeQuery();
 
@@ -478,6 +479,12 @@ public class Home extends javax.swing.JFrame {
         Agendamento agenda = new Agendamento();
         AgendamentoDAO dao = new AgendamentoDAO();
         
+        if (user_id == 0) {
+            JOptionPane.showMessageDialog(null, "Você precisa estar logado para agendar!");
+            
+            return;
+        }
+        
         if ((String) BarberComboBox.getSelectedItem() == "Escolher um barbeiro") {
             JOptionPane.showMessageDialog(null, "Você precisa escolher um barbeiro!");
             
@@ -490,7 +497,8 @@ public class Home extends javax.swing.JFrame {
             return;
         }
         
-        agenda.setBarbeiro((String) BarberComboBox.getSelectedItem());
+        agenda.setBarberId(BarberComboBox.getSelectedIndex());
+        agenda.setClienteId(user_id);
         agenda.setServico((String) ServiceComboBox.getSelectedItem());
         agenda.setData_agend((String) DateComboBox.getSelectedItem());
         agenda.setHora_agend((String) HourComboBox.getSelectedItem());

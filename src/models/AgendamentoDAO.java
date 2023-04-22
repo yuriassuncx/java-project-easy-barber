@@ -20,11 +20,11 @@ public class AgendamentoDAO {
         Connection con = Conexao.faz_conexao();
         
         // Verifica se já existe um agendamento com a mesma data e hora
-        String query = "SELECT COUNT(*) FROM agendamento WHERE data_agend = ? AND hora_agend = ? AND barbeiro = ?";
+        String query = "SELECT COUNT(*) FROM agendamento WHERE data_agend = ? AND hora_agend = ? AND barber_id = ?";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, agenda.getData_agend());
         stmt.setString(2, agenda.getHora_agend());
-        stmt.setString(3, agenda.getBarbeiro());
+        stmt.setInt(3, agenda.getBarberId());
         ResultSet rs = stmt.executeQuery();
         rs.next();
         int count = rs.getInt(1);
@@ -35,14 +35,15 @@ public class AgendamentoDAO {
         }
 
         // Cria o agendamento
-        query = "INSERT INTO agendamento (barbeiro, servico, data_agend, hora_agend, observacao, preco) VALUES (?, ?, ?, ?, ?, ?)";
+        query = "INSERT INTO agendamento (barber_id, user_id, servico, data_agend, hora_agend, observacao, preco) VALUES (?, ?, ?, ?, ?, ?, ?)";
         stmt = con.prepareStatement(query);
-        stmt.setString(1, agenda.getBarbeiro());
-        stmt.setString(2, agenda.getServico());
-        stmt.setString(3, agenda.getData_agend());
-        stmt.setString(4, agenda.getHora_agend());
-        stmt.setString(5, agenda.getObservacao());
-        stmt.setInt(6, agenda.getPreco());
+        stmt.setInt(1, agenda.getBarberId());
+        stmt.setInt(2, agenda.getClienteId());
+        stmt.setString(3, agenda.getServico());
+        stmt.setString(4, agenda.getData_agend());
+        stmt.setString(5, agenda.getHora_agend());
+        stmt.setString(6, agenda.getObservacao());
+        stmt.setInt(7, agenda.getPreco());
         stmt.executeUpdate();
            
         JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
@@ -62,13 +63,20 @@ public class AgendamentoDAO {
         List<Agendamento> agendas = new ArrayList<>();
     
         try {
-            stmt = con.prepareStatement("SELECT * FROM agendamento");
+            stmt = con.prepareStatement(
+        """
+                SELECT barber.name AS barbeiro, user.name AS cliente, servico, data_agend, hora_agend, observacao, preco 
+                FROM agendamento
+                JOIN barber ON barber.id = agendamento.barber_id
+                JOIN user ON user.id = agendamento.user_id;""");
+            
             rs = stmt.executeQuery();
             
             while (rs.next()) {
                 Agendamento tbAgendamento = new Agendamento();
 
                 tbAgendamento.setBarbeiro(rs.getString("barbeiro"));
+                tbAgendamento.setCliente(rs.getString("cliente"));
                 tbAgendamento.setServico(rs.getString("servico"));
                 tbAgendamento.setData_agend(rs.getString("data_agend"));
                 tbAgendamento.setHora_agend(rs.getString("hora_agend"));
@@ -91,16 +99,17 @@ public class AgendamentoDAO {
       try {
         Connection con = Conexao.faz_conexao();
             
-        String sql = "UPDATE agendamento SET barbeiro = ?, servico = ?, data_agend = ?, hora_agend = ?, observacao = ? WHERE id = ?)";
+        String sql = "UPDATE agendamento SET barber_id = ?, user_id = ?, servico = ?, data_agend = ?, hora_agend = ?, observacao = ? WHERE id = ?)";
 
         PreparedStatement stmt = con.prepareStatement(sql);
 
-        stmt.setString(1,agenda.getBarbeiro());
-        stmt.setString(2,agenda.getServico());
-        stmt.setString(3,agenda.getData_agend());
-        stmt.setString(4,agenda.getHora_agend());
-        stmt.setString(5,agenda.getObservacao());
-        stmt.setInt(4,agenda.getId());
+        stmt.setInt(1,agenda.getBarberId());
+        stmt.setInt(2,agenda.getClienteId());
+        stmt.setString(3,agenda.getServico());
+        stmt.setString(4,agenda.getData_agend());
+        stmt.setString(5,agenda.getHora_agend());
+        stmt.setString(6,agenda.getObservacao());
+        stmt.setInt(7,agenda.getId());
 
         stmt.execute();
 

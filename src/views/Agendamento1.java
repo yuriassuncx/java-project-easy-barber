@@ -34,6 +34,7 @@ public class Agendamento1 extends javax.swing.JFrame {
         for(Agendamento p: pdao.read()){
             modelo.addRow(new Object[]{
                 p.getBarbeiro(),
+                p.getCliente(),
                 p.getServico(),
                 p.getData_agend(),
                 p.getHora_agend(),
@@ -87,11 +88,11 @@ public class Agendamento1 extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Barbeiro", "Serviço", "Data", "Hora", "Observação", "Preço"
+                "Barbeiro", "Cliente", "Serviço", "Data", "Hora", "Observação", "Preço (R$)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
