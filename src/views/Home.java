@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import database.Conexao;
@@ -492,7 +488,7 @@ public class Home extends javax.swing.JFrame {
         }
         
         if ((String) ServiceComboBox.getSelectedItem() == "Escolher um serviço") {
-            JOptionPane.showMessageDialog(null, "Você precisa escolher um barbeiro!");
+            JOptionPane.showMessageDialog(null, "Você precisa escolher um serviço!");
             
             return;
         }
@@ -521,7 +517,11 @@ public class Home extends javax.swing.JFrame {
 
     private void UserSchedulesButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserSchedulesButton1ActionPerformed
         setVisible(false);
-        new Meus_agendamentos().setVisible(true);
+        try {
+            new MeusAgendamentos().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_UserSchedulesButton1ActionPerformed
 
     private void MyProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MyProfileButtonActionPerformed

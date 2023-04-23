@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 
@@ -55,7 +51,6 @@ public class AgendamentoDAO {
     }
     
     public List<Agendamento> read() throws SQLException {
-    
         Connection con = Conexao.faz_conexao();
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -70,6 +65,48 @@ public class AgendamentoDAO {
                 JOIN barber ON barber.id = agendamento.barber_id
                 JOIN user ON user.id = agendamento.user_id;""");
             
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                Agendamento tbAgendamento = new Agendamento();
+
+                tbAgendamento.setBarbeiro(rs.getString("barbeiro"));
+                tbAgendamento.setCliente(rs.getString("cliente"));
+                tbAgendamento.setServico(rs.getString("servico"));
+                tbAgendamento.setData_agend(rs.getString("data_agend"));
+                tbAgendamento.setHora_agend(rs.getString("hora_agend"));
+                tbAgendamento.setObservacao(rs.getString("observacao"));
+                tbAgendamento.setPreco(rs.getInt("preco"));
+                agendas.add(tbAgendamento);
+           } 
+             
+            stmt.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro");
+        } 
+
+        return agendas;
+    }
+    
+    public List<Agendamento> readByUserId(int user_id) throws SQLException {
+        Connection con = Conexao.faz_conexao();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        List<Agendamento> agendas = new ArrayList<>();
+    
+        try {
+            stmt = con.prepareStatement(
+        """
+                SELECT barber.name AS barbeiro, user.name AS cliente, servico, data_agend, hora_agend, observacao, preco 
+                FROM agendamento
+                JOIN barber ON barber.id = agendamento.barber_id
+                JOIN user ON user.id = agendamento.user_id
+                WHERE user_id = ?;""");
+            
+            stmt.setInt(1, user_id);
             rs = stmt.executeQuery();
             
             while (rs.next()) {

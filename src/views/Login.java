@@ -152,9 +152,10 @@ public class Login extends javax.swing.JFrame {
             Connection con = Conexao.faz_conexao();
             
             if (jCheckBox1.isSelected()) {
-                String sql = "SELECT * FROM admin WHERE username=? AND password=?";
+                String sql = "SELECT * FROM admin WHERE email=? AND password=?";
             
                 PreparedStatement stmt = con.prepareStatement(sql);
+                
                 stmt.setString(1, tfUsuario.getText());
                 stmt.setString(2, pfSenha.getText());
 
@@ -184,6 +185,7 @@ public class Login extends javax.swing.JFrame {
                     session.setUserName(user.getName());
                     
                     JOptionPane.showMessageDialog(null, "Logado!");
+                    
                     Home exibir = new Home();
                     exibir.setVisible(true);
                     setVisible(false);

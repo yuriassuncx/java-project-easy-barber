@@ -53,13 +53,11 @@ public class Feedbacks extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtAgenda = new javax.swing.JTable();
+        PainelButton = new javax.swing.JButton();
         LogoutIcon = new javax.swing.JLabel();
         MenuText = new javax.swing.JLabel();
         ProfileIcon = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        SchedulesButton = new javax.swing.JButton();
-        FinnancesButton = new javax.swing.JButton();
-        NewBarbers = new javax.swing.JButton();
         MyProfileButton = new javax.swing.JButton();
         Logo = new javax.swing.JLabel();
         Background = new javax.swing.JLabel();
@@ -121,6 +119,16 @@ public class Feedbacks extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, 490));
 
+        PainelButton.setBackground(new java.awt.Color(9, 9, 10));
+        PainelButton.setForeground(new java.awt.Color(255, 255, 255));
+        PainelButton.setText("Painel de Controle");
+        PainelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PainelButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(PainelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 220, 40));
+
         LogoutIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout-icon.png"))); // NOI18N
         jPanel1.add(LogoutIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 580, -1, -1));
 
@@ -138,26 +146,6 @@ public class Feedbacks extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("EasyBarber");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 586, 110, 20));
-
-        SchedulesButton.setBackground(new java.awt.Color(9, 9, 10));
-        SchedulesButton.setForeground(new java.awt.Color(255, 255, 255));
-        SchedulesButton.setText("Agendamentos");
-        SchedulesButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SchedulesButtonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(SchedulesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 220, 40));
-
-        FinnancesButton.setBackground(new java.awt.Color(9, 9, 10));
-        FinnancesButton.setForeground(new java.awt.Color(255, 255, 255));
-        FinnancesButton.setText("Finanças");
-        jPanel1.add(FinnancesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
-
-        NewBarbers.setBackground(new java.awt.Color(9, 9, 10));
-        NewBarbers.setForeground(new java.awt.Color(255, 255, 255));
-        NewBarbers.setText("Gerenciar Barbeiro");
-        jPanel1.add(NewBarbers, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 220, 40));
 
         MyProfileButton.setBackground(new java.awt.Color(9, 9, 10));
         MyProfileButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,13 +177,13 @@ public class Feedbacks extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SchedulesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SchedulesButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_SchedulesButtonActionPerformed
-
     private void agendamento(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_agendamento
         // TODO add your handling code here:
     }//GEN-LAST:event_agendamento
+
+    private void PainelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PainelButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PainelButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,14 +289,12 @@ public class Feedbacks extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
-    private javax.swing.JButton FinnancesButton;
     private javax.swing.JLabel Logo;
     private javax.swing.JLabel LogoutIcon;
     private javax.swing.JLabel MenuText;
     private javax.swing.JButton MyProfileButton;
-    private javax.swing.JButton NewBarbers;
+    private javax.swing.JButton PainelButton;
     private javax.swing.JLabel ProfileIcon;
-    private javax.swing.JButton SchedulesButton;
     private javax.swing.JLabel SidebarBackground;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

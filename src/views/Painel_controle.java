@@ -4,6 +4,10 @@
  */
 package views;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Fábio
@@ -31,8 +35,7 @@ public class Painel_controle extends javax.swing.JFrame {
         MenuText = new javax.swing.JLabel();
         ProfileIcon = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        SchedulesButton = new javax.swing.JButton();
-        FinnancesButton = new javax.swing.JButton();
+        PainelButton = new javax.swing.JButton();
         TeamPanelButton = new javax.swing.JButton();
         BarberPanelButton = new javax.swing.JButton();
         SchedulesPanelButton = new javax.swing.JButton();
@@ -67,43 +70,63 @@ public class Painel_controle extends javax.swing.JFrame {
         jLabel2.setText("EasyBarber");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 586, 110, 20));
 
-        SchedulesButton.setBackground(new java.awt.Color(9, 9, 10));
-        SchedulesButton.setForeground(new java.awt.Color(255, 255, 255));
-        SchedulesButton.setText("Agendamentos");
-        SchedulesButton.addActionListener(new java.awt.event.ActionListener() {
+        PainelButton.setBackground(new java.awt.Color(9, 9, 10));
+        PainelButton.setForeground(new java.awt.Color(255, 255, 255));
+        PainelButton.setText("Painel de Controle");
+        PainelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SchedulesButtonActionPerformed(evt);
+                PainelButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(SchedulesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 220, 40));
-
-        FinnancesButton.setBackground(new java.awt.Color(9, 9, 10));
-        FinnancesButton.setForeground(new java.awt.Color(255, 255, 255));
-        FinnancesButton.setText("Painel de Controle");
-        jPanel1.add(FinnancesButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 220, 40));
+        jPanel1.add(PainelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 220, 40));
 
         TeamPanelButton.setBackground(new java.awt.Color(9, 9, 10));
         TeamPanelButton.setForeground(new java.awt.Color(255, 255, 255));
         TeamPanelButton.setText("Gerenciar Equipe");
+        TeamPanelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TeamPanelButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(TeamPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 220, 40));
 
         BarberPanelButton.setBackground(new java.awt.Color(9, 9, 10));
         BarberPanelButton.setForeground(new java.awt.Color(255, 255, 255));
         BarberPanelButton.setText("Gerenciar Barbeiro");
+        BarberPanelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BarberPanelButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(BarberPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 160, 220, 40));
 
         SchedulesPanelButton.setBackground(new java.awt.Color(9, 9, 10));
         SchedulesPanelButton.setForeground(new java.awt.Color(255, 255, 255));
         SchedulesPanelButton.setText("Agendamentos");
+        SchedulesPanelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SchedulesPanelButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(SchedulesPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 290, 220, 40));
 
         FinnancesPanelButton.setBackground(new java.awt.Color(9, 9, 10));
         FinnancesPanelButton.setForeground(new java.awt.Color(255, 255, 255));
         FinnancesPanelButton.setText("Finanças");
+        FinnancesPanelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FinnancesPanelButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(FinnancesPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 290, 220, 40));
 
         MyProfileButton.setBackground(new java.awt.Color(9, 9, 10));
         MyProfileButton.setForeground(new java.awt.Color(255, 255, 255));
+        MyProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MyProfileButtonActionPerformed(evt);
+            }
+        });
         jPanel1.add(MyProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 570, 190, 50));
 
         Logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo-small.png"))); // NOI18N
@@ -152,9 +175,37 @@ public class Painel_controle extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SchedulesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SchedulesButtonActionPerformed
+    private void PainelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PainelButtonActionPerformed
+        
+    }//GEN-LAST:event_PainelButtonActionPerformed
+
+    private void TeamPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeamPanelButtonActionPerformed
+        setVisible(false);
+        new Gerenciamento_equipe().setVisible(true);
+    }//GEN-LAST:event_TeamPanelButtonActionPerformed
+
+    private void BarberPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BarberPanelButtonActionPerformed
+        setVisible(false);
+        new Gerenciamento_barbeiro().setVisible(true);
+    }//GEN-LAST:event_BarberPanelButtonActionPerformed
+
+    private void FinnancesPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FinnancesPanelButtonActionPerformed
+        setVisible(false);
+        new Finanças().setVisible(true);
+    }//GEN-LAST:event_FinnancesPanelButtonActionPerformed
+
+    private void SchedulesPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SchedulesPanelButtonActionPerformed
+        setVisible(false);
+        try {
+            new Agendamentos().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Painel_controle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_SchedulesPanelButtonActionPerformed
+
+    private void MyProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MyProfileButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_SchedulesButtonActionPerformed
+    }//GEN-LAST:event_MyProfileButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,14 +245,13 @@ public class Painel_controle extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JButton BarberPanelButton;
-    private javax.swing.JButton FinnancesButton;
     private javax.swing.JButton FinnancesPanelButton;
     private javax.swing.JLabel Logo;
     private javax.swing.JLabel LogoutIcon;
     private javax.swing.JLabel MenuText;
     private javax.swing.JButton MyProfileButton;
+    private javax.swing.JButton PainelButton;
     private javax.swing.JLabel ProfileIcon;
-    private javax.swing.JButton SchedulesButton;
     private javax.swing.JButton SchedulesPanelButton;
     private javax.swing.JLabel SidebarBackground;
     private javax.swing.JButton TeamPanelButton;

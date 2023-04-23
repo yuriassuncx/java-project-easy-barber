@@ -4,6 +4,9 @@
  */
 package views;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.Session;
 
 
@@ -247,7 +250,11 @@ public class Profile extends javax.swing.JFrame {
 
     private void UserSchedulesButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserSchedulesButton1ActionPerformed
         setVisible(false);
-        new Meus_agendamentos().setVisible(true);
+        try {
+            new MeusAgendamentos().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_UserSchedulesButton1ActionPerformed
 
     /**
