@@ -38,7 +38,7 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
         BarbeiroDAO pdao = new BarbeiroDAO();
         
         for(Barber b: pdao.read()){
-            modelo.addRow(new Object[]{
+            modelo.addRow(new Object[] {
                 b.getBarberName(),
                 b.getTotalLikes()
             });
@@ -243,6 +243,12 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
             BarberTextField.setText("");
         } catch (SQLException ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                readBarbersTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(Gerenciamento_barbeiro.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

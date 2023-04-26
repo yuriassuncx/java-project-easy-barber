@@ -32,7 +32,7 @@ public class Feedbacks extends javax.swing.JFrame {
         FeedbacksDAO pdao = new FeedbacksDAO();
         
         for(Feedback f: pdao.read()){
-            modelo.addRow(new Object[]{
+            modelo.addRow(new Object[] {
                 f.getBarberName(),
                 f.getTotalLikes()
             });
@@ -73,7 +73,10 @@ public class Feedbacks extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Feedbacks");
 
         jtAgenda.setModel(new javax.swing.table.DefaultTableModel(

@@ -28,6 +28,7 @@ public class ServiceDAO {
             
             while (rs.next()) {
                 Service tbService = new Service();
+                tbService.setId(rs.getInt("id"));
                 tbService.setService(rs.getString("cut_type"));
                 tbService.setPrice(rs.getInt("price"));
                 services.add(tbService);

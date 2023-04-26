@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package views;
 
 import java.sql.SQLException;
@@ -38,7 +34,8 @@ public class Serviços extends javax.swing.JFrame {
         ServiceDAO pdao = new ServiceDAO();
         
         for(Service s: pdao.read()){
-            modelo.addRow(new Object[]{
+            modelo.addRow(new Object[] {
+                s.getId(),
                 s.getService(),
                 s.getPrice()
             });

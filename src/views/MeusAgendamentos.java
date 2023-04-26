@@ -35,7 +35,7 @@ public class MeusAgendamentos extends javax.swing.JFrame {
         
         if (user_id == 0) {
             JOptionPane.showMessageDialog(null, "Você precisa estar logado!");
-            //System.exit(0);
+            System.exit(0);
         }
         
         for(Agendamento p: pdao.readByUserId(user_id)){
