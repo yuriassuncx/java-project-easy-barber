@@ -4,19 +4,45 @@
  */
 package views;
 
-import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import models.Service;
+import models.ServiceDAO;
 
 /**
  *
  * @author Fábio
  */
-public class Gerenciamento_equipe extends javax.swing.JFrame {
+public class Serviços extends javax.swing.JFrame {
 
     /**
      * Creates new form Home
      */
-    public Gerenciamento_equipe() {
+    public Serviços() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) jtAgenda.getModel();
+        
+        try {
+            readServicesTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(Serviços.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void readServicesTable() throws SQLException {
+        DefaultTableModel modelo = (DefaultTableModel) jtAgenda.getModel();
+        modelo.setNumRows(0);
+        
+        ServiceDAO pdao = new ServiceDAO();
+        
+        for(Service s: pdao.read()){
+            modelo.addRow(new Object[]{
+                s.getService(),
+                s.getPrice()
+            });
+        }
     }
 
     /**
@@ -30,17 +56,17 @@ public class Gerenciamento_equipe extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jSeparator5 = new javax.swing.JSeparator();
-        jLabel35 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         ProfileIcon = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtAgenda = new javax.swing.JTable();
+        ServiceLabel = new javax.swing.JLabel();
+        PriceLabel = new javax.swing.JLabel();
+        ServiceTextField = new javax.swing.JTextField();
+        PriceTextField = new javax.swing.JTextField();
+        ConfirmButton = new javax.swing.JButton();
+        RemoveButton = new javax.swing.JButton();
         PainelButton = new javax.swing.JButton();
         MyProfileButton = new javax.swing.JButton();
         LogoutIcon = new javax.swing.JLabel();
@@ -57,43 +83,8 @@ public class Gerenciamento_equipe extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Javanese Text", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Gerenciamento de Equipe");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, -1, 60));
-
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel28.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
-        jLabel28.setText("Total:");
-        jPanel6.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, -1, 50));
-
-        jLabel29.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel29.setText("R$ 150,00");
-        jPanel6.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 490, -1, 60));
-
-        jLabel30.setFont(new java.awt.Font("Javanese Text", 1, 18)); // NOI18N
-        jLabel30.setText("Matheus Messias");
-        jPanel6.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 60));
-        jPanel6.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 270, 30));
-
-        jLabel35.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
-        jLabel35.setText("Realizados");
-        jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 60));
-
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 70, 310, 550));
-
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
-        jLabel8.setText("Fulano Souza");
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 60));
-
-        jLabel18.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel18.setText("Disponibilidade:");
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 60));
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 340, 200));
+        jLabel1.setText("Gerenciamento de Serviços");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, -1, 60));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("EasyBarber");
@@ -103,6 +94,88 @@ public class Gerenciamento_equipe extends javax.swing.JFrame {
         ProfileIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-button-icon.png"))); // NOI18N
         ProfileIcon.setText("Profile");
         jPanel1.add(ProfileIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 40, -1));
+
+        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
+
+        jtAgenda.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Id", "Serviço", "Preço"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jtAgenda);
+
+        ServiceLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ServiceLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ServiceLabel.setText("Serviço:");
+
+        PriceLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        PriceLabel.setForeground(new java.awt.Color(255, 255, 255));
+        PriceLabel.setText("Preço:");
+
+        ConfirmButton.setText("Adicionar");
+
+        RemoveButton.setText("Remover");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ServiceLabel)
+                    .addComponent(ServiceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(62, 62, 62)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PriceLabel)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(PriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
+                        .addComponent(ConfirmButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(RemoveButton)))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(ServiceLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(ServiceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(PriceLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(PriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ConfirmButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(RemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 640, 490));
 
         PainelButton.setBackground(new java.awt.Color(9, 9, 10));
         PainelButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -188,14 +261,22 @@ public class Gerenciamento_equipe extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Gerenciamento_equipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Serviços.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Gerenciamento_equipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Serviços.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Gerenciamento_equipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Serviços.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Gerenciamento_equipe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Serviços.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -208,32 +289,32 @@ public class Gerenciamento_equipe extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Gerenciamento_equipe().setVisible(true);
+                new Serviços().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JButton ConfirmButton;
     private javax.swing.JLabel Logo;
     private javax.swing.JLabel LogoutIcon;
     private javax.swing.JLabel MenuText;
     private javax.swing.JButton MyProfileButton;
     private javax.swing.JButton PainelButton;
+    private javax.swing.JLabel PriceLabel;
+    private javax.swing.JTextField PriceTextField;
     private javax.swing.JLabel ProfileIcon;
+    private javax.swing.JButton RemoveButton;
+    private javax.swing.JLabel ServiceLabel;
+    private javax.swing.JTextField ServiceTextField;
     private javax.swing.JLabel SidebarBackground;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jtAgenda;
     // End of variables declaration//GEN-END:variables
 }

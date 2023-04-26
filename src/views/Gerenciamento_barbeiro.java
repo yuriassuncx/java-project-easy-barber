@@ -4,6 +4,14 @@
  */
 package views;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Barber;
+import models.BarbeiroDAO;
+
 /**
  *
  * @author Fábio
@@ -15,6 +23,26 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
      */
     public Gerenciamento_barbeiro() {
         initComponents();
+        
+        try {
+            readBarbersTable();
+        } catch (SQLException ex) {
+            Logger.getLogger(Gerenciamento_barbeiro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void readBarbersTable() throws SQLException {
+        DefaultTableModel modelo = (DefaultTableModel) jtAgenda.getModel();
+        modelo.setNumRows(0);
+        
+        BarbeiroDAO pdao = new BarbeiroDAO();
+        
+        for(Barber b: pdao.read()){
+            modelo.addRow(new Object[]{
+                b.getBarberName(),
+                b.getTotalLikes()
+            });
+        }
     }
 
     /**
@@ -30,6 +58,12 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         ProfileIcon = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtAgenda = new javax.swing.JTable();
+        BarberTextField = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         PainelButton = new javax.swing.JButton();
         MyProfileButton = new javax.swing.JButton();
         LogoutIcon = new javax.swing.JLabel();
@@ -47,7 +81,7 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Javanese Text", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gerenciamento de Barbeiro");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 0, -1, 60));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 0, -1, 60));
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("EasyBarber");
@@ -57,6 +91,73 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
         ProfileIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-button-icon.png"))); // NOI18N
         ProfileIcon.setText("Profile");
         jPanel1.add(ProfileIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 40, -1));
+
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+
+        jtAgenda.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Barbeiro", "Likes"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtAgenda);
+
+        jButton1.setText("Adicionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Barbeiro:");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(BarberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(118, 118, 118))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BarberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
 
         PainelButton.setBackground(new java.awt.Color(9, 9, 10));
         PainelButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -125,6 +226,26 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
         new Painel_controle().setVisible(true);
     }//GEN-LAST:event_PainelButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Barber barbeiro = new Barber();
+        BarbeiroDAO barberDao = new BarbeiroDAO();
+        
+        if (BarberTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Você precisa preencher o campo corretamente!");
+            return;
+        }
+        
+        barbeiro.setBarbeiro(BarberTextField.getText());
+        
+        try {
+            barberDao.create(barbeiro);
+            
+            BarberTextField.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -177,6 +298,7 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JTextField BarberTextField;
     private javax.swing.JLabel Logo;
     private javax.swing.JLabel LogoutIcon;
     private javax.swing.JLabel MenuText;
@@ -184,9 +306,14 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
     private javax.swing.JButton PainelButton;
     private javax.swing.JLabel ProfileIcon;
     private javax.swing.JLabel SidebarBackground;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jtAgenda;
     // End of variables declaration//GEN-END:variables
 }

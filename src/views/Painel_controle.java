@@ -36,7 +36,7 @@ public class Painel_controle extends javax.swing.JFrame {
         ProfileIcon = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         PainelButton = new javax.swing.JButton();
-        TeamPanelButton = new javax.swing.JButton();
+        ServicePanelButton = new javax.swing.JButton();
         BarberPanelButton = new javax.swing.JButton();
         SchedulesPanelButton = new javax.swing.JButton();
         FinnancesPanelButton = new javax.swing.JButton();
@@ -80,15 +80,15 @@ public class Painel_controle extends javax.swing.JFrame {
         });
         jPanel1.add(PainelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 220, 40));
 
-        TeamPanelButton.setBackground(new java.awt.Color(9, 9, 10));
-        TeamPanelButton.setForeground(new java.awt.Color(255, 255, 255));
-        TeamPanelButton.setText("Gerenciar Equipe");
-        TeamPanelButton.addActionListener(new java.awt.event.ActionListener() {
+        ServicePanelButton.setBackground(new java.awt.Color(9, 9, 10));
+        ServicePanelButton.setForeground(new java.awt.Color(255, 255, 255));
+        ServicePanelButton.setText("Gerenciar Serviço");
+        ServicePanelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TeamPanelButtonActionPerformed(evt);
+                ServicePanelButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(TeamPanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 220, 40));
+        jPanel1.add(ServicePanelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, 220, 40));
 
         BarberPanelButton.setBackground(new java.awt.Color(9, 9, 10));
         BarberPanelButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -179,10 +179,10 @@ public class Painel_controle extends javax.swing.JFrame {
         
     }//GEN-LAST:event_PainelButtonActionPerformed
 
-    private void TeamPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TeamPanelButtonActionPerformed
+    private void ServicePanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServicePanelButtonActionPerformed
         setVisible(false);
-        new Gerenciamento_equipe().setVisible(true);
-    }//GEN-LAST:event_TeamPanelButtonActionPerformed
+        new Serviços().setVisible(true);
+    }//GEN-LAST:event_ServicePanelButtonActionPerformed
 
     private void BarberPanelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BarberPanelButtonActionPerformed
         setVisible(false);
@@ -253,8 +253,8 @@ public class Painel_controle extends javax.swing.JFrame {
     private javax.swing.JButton PainelButton;
     private javax.swing.JLabel ProfileIcon;
     private javax.swing.JButton SchedulesPanelButton;
+    private javax.swing.JButton ServicePanelButton;
     private javax.swing.JLabel SidebarBackground;
-    private javax.swing.JButton TeamPanelButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
