@@ -40,7 +40,9 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
         for(Barber b: pdao.read()){
             modelo.addRow(new Object[] {
                 b.getBarberName(),
-                b.getTotalLikes()
+                b.getLikes(),
+                b.getDeslikes(),
+                b.getTotalAvaliacao()
             });
         }
     }
@@ -99,11 +101,11 @@ public class Gerenciamento_barbeiro extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Barbeiro", "Likes"
+                "Barbeiro", "Likes", "Deslikes", "Total de Avaliações"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

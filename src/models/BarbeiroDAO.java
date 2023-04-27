@@ -39,10 +39,17 @@ public class BarbeiroDAO {
         try {
             stmt = con.prepareStatement(
         """
-                SELECT barber.name AS barbeiro, COALESCE(COUNT(feedback.id), 0) AS total_likes
-                FROM barber
-                LEFT JOIN feedback ON barber.id = feedback.barber_id
-                GROUP BY barber.name;""");
+                SELECT 
+                  barber.name AS barbeiro, 
+                  COUNT(CASE WHEN feedback.is_liked THEN 1 END) AS likes,
+                  COUNT(CASE WHEN NOT feedback.is_liked THEN 1 END) AS deslikes,
+                  COUNT(*) AS total_avaliacao
+                FROM 
+                  barber 
+                  LEFT JOIN feedback ON barber.id = feedback.barber_id
+                GROUP BY 
+                  barber.name, 
+                  feedback.is_liked;""");
             
             rs = stmt.executeQuery();
             
@@ -50,7 +57,9 @@ public class BarbeiroDAO {
                 Barber tbBarbeiro = new Barber();
 
                 tbBarbeiro.setBarbeiro(rs.getString("barbeiro"));
-                tbBarbeiro.setTotalLikes(rs.getInt("total_likes"));
+                tbBarbeiro.setLikes(rs.getInt("likes"));
+                tbBarbeiro.setDeslikes(rs.getInt("deslikes"));
+                tbBarbeiro.setTotalAvaliacao(rs.getInt("total_avaliacao"));
                 barbeiros.add(tbBarbeiro);
            } 
              

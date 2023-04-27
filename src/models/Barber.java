@@ -10,7 +10,9 @@ package models;
  */
 public class Barber {
     private String barbeiro;
-    private int total_likes;
+    private int likes;
+    private int deslikes;
+    private int total_avaliacao;
     
     public String getBarberName() {
         return barbeiro;
@@ -20,11 +22,27 @@ public class Barber {
         this.barbeiro = barbeiro;
     }
     
-    public int getTotalLikes() {
-        return total_likes;
+    public int getLikes() {
+        return likes;
+    }
+    
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+    
+    public int getDeslikes() {
+        return deslikes;
+    }
+    
+    public void setDeslikes(int deslikes) {
+        this.deslikes = deslikes;
+    }
+    
+    public int getTotalAvaliacao() {
+        return total_avaliacao;
     }
 
-    public void setTotalLikes(int total_likes) {
-        this.total_likes = total_likes;
+    public void setTotalAvaliacao(int total_avaliacao) {
+        this.total_avaliacao = total_avaliacao;
     }    
 }
