@@ -15,6 +15,25 @@ import javax.swing.JOptionPane;
 
 
 public class ServiceDAO {
+    public void create(Service service) throws SQLException {
+      try {
+        Connection con = Conexao.faz_conexao();        
+
+        // Cria o barbeiro
+        String query = "INSERT INTO service (cut_type, price) VALUES (?, ?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, service.getService());
+        stmt.setInt(2, service.getPrice());
+        stmt.executeUpdate();
+           
+        JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
+        con.close();
+        stmt.close();
+    } catch (SQLException e) {
+        e.printStackTrace();
+      }   
+    }
+    
     public List<Service> read() throws SQLException {        
         Connection con = Conexao.faz_conexao();
         PreparedStatement stmt = null;

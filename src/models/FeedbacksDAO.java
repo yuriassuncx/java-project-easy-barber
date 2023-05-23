@@ -53,16 +53,18 @@ public class FeedbacksDAO {
         return feedbacks;
     }
     
-    public void createFeedback(int user_id, int barber_id) throws SQLException {
+    public void createFeedback(int user_id, int barber_id, boolean is_liked, String avaliacao) throws SQLException {
         try {
             Connection con = Conexao.faz_conexao();
 
-            String sql = "INSERT INTO feedback (barber_id, user_id) values (?,?)";
+            String sql = "INSERT INTO feedback (barber_id, user_id, is_liked, avaliacao) values (?,?,?,?)";
 
             PreparedStatement stmt = con.prepareStatement(sql);
 
             stmt.setInt(1, barber_id);
             stmt.setInt(2, user_id);
+            stmt.setBoolean(3, is_liked);
+            stmt.setString(4, avaliacao);
 
             int rowsAffected = stmt.executeUpdate();
             

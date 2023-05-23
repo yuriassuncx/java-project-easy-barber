@@ -5,21 +5,66 @@
 package views;
 
 
+import database.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import models.FeedbacksDAO;
 import models.Session;
 
 
 public class Feedbacks extends javax.swing.JFrame {
     Session session = Session.getInstance();
+    int user_id = session.getUserId();
+    int barber_id;
     String userName = session.getUserName();
 
     /**
      * Creates new form Home
+     * @param barbeiro
      */
-    public Feedbacks() {
+    public Feedbacks(String barbeiro) {
         initComponents();
+        
+        jLabel3.setText(barbeiro);
+    }
+
+    private Feedbacks() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    public void getIdBarbeiroPorNome(String nomeBarbeiro) throws SQLException {
+        Connection con = Conexao.faz_conexao();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            con = Conexao.faz_conexao();
+            String sql = "SELECT id FROM barber WHERE name = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, nomeBarbeiro);
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                barber_id = rs.getInt(1); // Obtém o valor do primeiro campo (id)
+            }
+        } catch (SQLException ex) {
+            throw new SQLException("Erro ao obter o ID do barbeiro", ex);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 
     /**
@@ -48,7 +93,6 @@ public class Feedbacks extends javax.swing.JFrame {
         jRadioButton4 = new javax.swing.JRadioButton();
         jRadioButton5 = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
-        jRadioButton7 = new javax.swing.JRadioButton();
         jLabel7 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -84,7 +128,7 @@ public class Feedbacks extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ProfileIcon.png"))); // NOI18N
-        jLabel3.setText("Marcos");
+        jLabel3.setText("<barber>");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -124,22 +168,23 @@ public class Feedbacks extends javax.swing.JFrame {
         jRadioButton6.setForeground(new java.awt.Color(255, 255, 255));
         jRadioButton6.setText("Rapidez");
 
-        buttonGroup2.add(jRadioButton7);
-        jRadioButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jRadioButton7.setText("Bom ambiente");
-
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Caso seja outro motivo, por favor, comente:");
 
         jButton1.setText("Enviar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(227, Short.MAX_VALUE)
+                .addContainerGap(236, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(221, 221, 221))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
@@ -149,7 +194,7 @@ public class Feedbacks extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jRadioButton1)
@@ -170,9 +215,7 @@ public class Feedbacks extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioButton5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton7))
+                                .addComponent(jRadioButton6))
                             .addComponent(jLabel6)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 594, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -187,21 +230,26 @@ public class Feedbacks extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)))
-                .addGap(18, 18, 18)
+                        .addGap(62, 62, 62)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jRadioButton1)
+                                    .addComponent(jRadioButton2)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3)))
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
@@ -210,8 +258,7 @@ public class Feedbacks extends javax.swing.JFrame {
                     .addComponent(jRadioButton3)
                     .addComponent(jRadioButton4)
                     .addComponent(jRadioButton5)
-                    .addComponent(jRadioButton6)
-                    .addComponent(jRadioButton7))
+                    .addComponent(jRadioButton6))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -346,6 +393,52 @@ public class Feedbacks extends javax.swing.JFrame {
         new Profile().setVisible(true);
     }//GEN-LAST:event_MyProfileButtonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FeedbacksDAO feedbacksDao = new FeedbacksDAO();
+        boolean selectedOption = false;
+        String avaliacao = "";
+        
+        if (buttonGroup1.getSelection() != null) {
+            if (buttonGroup1.getSelection().equals(jRadioButton1.getModel())) {
+                selectedOption = true;
+            } else {
+                selectedOption = false;
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Nenhuma opção foi selecionada");
+        }
+        
+        if (buttonGroup2.getSelection() != null) {
+            if (buttonGroup2.getSelection().equals(jRadioButton3.getModel())) {
+                avaliacao = "Pontualidade";
+            } else if (buttonGroup2.getSelection().equals(jRadioButton4.getModel())) {
+                avaliacao = "Gentileza";
+            } else if (buttonGroup2.getSelection().equals(jRadioButton5.getModel())) {
+                avaliacao = "Habilidade";
+            } else if (buttonGroup2.getSelection().equals(jRadioButton6.getModel())) {
+                avaliacao = "Rapidez";
+            } else {
+                avaliacao = jTextField1.getText();
+            }
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Nenhuma opção foi selecionada");
+        }
+        
+        try {
+            getIdBarbeiroPorNome(jLabel3.getText());
+            System.out.println("barber_id: " + barber_id);
+        } catch (SQLException ex) {
+            Logger.getLogger(Feedbacks.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            feedbacksDao.createFeedback(user_id, barber_id, selectedOption, avaliacao);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(rootPane, "Erro ao cadastrar feedback: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -474,7 +567,6 @@ public class Feedbacks extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JRadioButton jRadioButton6;
-    private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField jTextField1;

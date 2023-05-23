@@ -3,6 +3,7 @@ package views;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.Service;
 import models.ServiceDAO;
@@ -124,6 +125,11 @@ public class Serviços extends javax.swing.JFrame {
         PriceLabel.setText("Preço:");
 
         ConfirmButton.setText("Adicionar");
+        ConfirmButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmButtonActionPerformed(evt);
+            }
+        });
 
         RemoveButton.setText("Remover");
 
@@ -240,6 +246,34 @@ public class Serviços extends javax.swing.JFrame {
         setVisible(false);
         new Painel_controle().setVisible(true);
     }//GEN-LAST:event_PainelButtonActionPerformed
+
+    private void ConfirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmButtonActionPerformed
+        Service service = new Service();
+        ServiceDAO serviceDao = new ServiceDAO();
+        
+        if (ServiceTextField.getText().isEmpty() || PriceTextField.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Você precisa preencher todos os campos corretamente!");
+            return;
+        }
+        
+        service.setService(ServiceTextField.getText());
+        service.setPrice(Integer.parseInt(PriceTextField.getText()));
+        
+        try {
+            serviceDao.create(service);
+            
+            ServiceTextField.setText("");
+            PriceTextField.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                readServicesTable();
+            } catch (SQLException ex) {
+                Logger.getLogger(Gerenciamento_barbeiro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_ConfirmButtonActionPerformed
 
     /**
      * @param args the command line arguments

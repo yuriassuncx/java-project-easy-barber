@@ -7,15 +7,49 @@ package views;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Agendamento;
+import models.AgendamentoDAO;
 import models.Session;
 
 
 public class Profile extends javax.swing.JFrame {
     Session session = Session.getInstance();
+    int user_id = session.getUserId();
     String userName = session.getUserName();
     
     public Profile() {
         initComponents();
+        try {
+            readTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void readTabela() throws SQLException {
+        DefaultTableModel modelo = (DefaultTableModel) jtAgenda.getModel();
+        modelo.setNumRows(0);
+        
+        AgendamentoDAO pdao = new AgendamentoDAO();
+        
+        if (user_id == 0) {
+            JOptionPane.showMessageDialog(null, "Você precisa estar logado!");
+            System.exit(0);
+        }
+        
+        for(Agendamento p: pdao.readByUserId(user_id)){
+            modelo.addRow(new Object[]{
+                p.getBarbeiro(),
+                p.getCliente(),
+                p.getServico(),
+                p.getData_agend(),
+                p.getHora_agend(),
+                p.getObservacao(),
+                p.getPreco()
+            });
+        }
     }
 
     /**
@@ -38,7 +72,7 @@ public class Profile extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtAgenda = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -110,7 +144,7 @@ public class Profile extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setText("Histórico");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtAgenda.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -129,7 +163,7 @@ public class Profile extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtAgenda);
 
         jButton1.setText("Avaliar barbeiro");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -299,8 +333,17 @@ public class Profile extends javax.swing.JFrame {
     }//GEN-LAST:event_UserSchedulesButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        setVisible(false);
-        new Feedbacks().setVisible(true);
+        try {
+            int selectedRow = jtAgenda.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel) jtAgenda.getModel();
+
+            String barbeiro = model.getValueAt(selectedRow, 0).toString();
+
+            Feedbacks feedbacks = new Feedbacks(barbeiro);
+            feedbacks.setVisible(true);
+        } catch(Exception error) {
+            JOptionPane.showMessageDialog(null, "Você precisa selecionar um agendamento!");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -364,6 +407,6 @@ public class Profile extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtAgenda;
     // End of variables declaration//GEN-END:variables
 }
