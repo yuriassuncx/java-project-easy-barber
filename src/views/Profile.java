@@ -4,6 +4,10 @@
  */
 package views;
 
+import database.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +27,12 @@ public class Profile extends javax.swing.JFrame {
         initComponents();
         try {
             readTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            getCompletedSchedulesNumber();
         } catch (SQLException ex) {
             Logger.getLogger(Profile.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,6 +60,39 @@ public class Profile extends javax.swing.JFrame {
                 p.getPreco()
             });
         }
+        
+        jLabel6.setText(String.valueOf(jtAgenda.getRowCount()));
+    }
+    
+    private void getCompletedSchedulesNumber() throws SQLException {
+        Connection con = Conexao.faz_conexao();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        int count = 0;
+    
+        try {
+            stmt = con.prepareStatement(
+        """
+                SELECT COUNT(*) AS total
+                FROM agendamento
+                WHERE user_id = ? AND status = true;""");
+            
+            stmt.setInt(1, user_id);
+            rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+             
+            stmt.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro");
+        }
+        
+        jLabel7.setText(String.valueOf(count));
     }
 
     /**
@@ -215,10 +258,10 @@ public class Profile extends javax.swing.JFrame {
         jLabel5.setText("Concluídos");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setText("20");
+        jLabel6.setText("0");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setText("10");
+        jLabel7.setText("0");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -231,11 +274,11 @@ public class Profile extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addGap(55, 55, 55))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(95, 95, 95)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
-                .addGap(89, 89, 89))
+                .addGap(96, 96, 96))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -340,6 +383,7 @@ public class Profile extends javax.swing.JFrame {
             String barbeiro = model.getValueAt(selectedRow, 0).toString();
 
             Feedbacks feedbacks = new Feedbacks(barbeiro);
+            setVisible(false);
             feedbacks.setVisible(true);
         } catch(Exception error) {
             JOptionPane.showMessageDialog(null, "Você precisa selecionar um agendamento!");

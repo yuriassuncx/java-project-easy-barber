@@ -78,7 +78,7 @@ public class FeedbacksDAO {
             con.close();
             stmt.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar feedback!");
+            JOptionPane.showMessageDialog(null, "Você já avaliou este barbeiro anteriormente!");
         }
     }
     

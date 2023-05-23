@@ -31,7 +31,7 @@ public class AgendamentoDAO {
         }
 
         // Cria o agendamento
-        query = "INSERT INTO agendamento (barber_id, user_id, servico, data_agend, hora_agend, observacao, preco) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        query = "INSERT INTO agendamento (barber_id, user_id, servico, data_agend, hora_agend, observacao, preco, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         stmt = con.prepareStatement(query);
         stmt.setInt(1, agenda.getBarberId());
         stmt.setInt(2, agenda.getClienteId());
@@ -40,6 +40,7 @@ public class AgendamentoDAO {
         stmt.setString(5, agenda.getHora_agend());
         stmt.setString(6, agenda.getObservacao());
         stmt.setInt(7, agenda.getPreco());
+        stmt.setBoolean(8, false);
         stmt.executeUpdate();
            
         JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
@@ -60,7 +61,7 @@ public class AgendamentoDAO {
         try {
             stmt = con.prepareStatement(
         """
-                SELECT barber.name AS barbeiro, user.name AS cliente, servico, data_agend, hora_agend, observacao, preco 
+                SELECT barber.name AS barbeiro, user.name AS cliente, servico, data_agend, hora_agend, observacao, preco
                 FROM agendamento
                 JOIN barber ON barber.id = agendamento.barber_id
                 JOIN user ON user.id = agendamento.user_id;""");
