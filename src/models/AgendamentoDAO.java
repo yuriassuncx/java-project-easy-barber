@@ -16,7 +16,7 @@ public class AgendamentoDAO {
         Connection con = Conexao.faz_conexao();
         
         // Verifica se já existe um agendamento com a mesma data e hora
-        String query = "SELECT COUNT(*) FROM agendamento WHERE data_agend = ? AND hora_agend = ? AND barber_id = ?";
+        String query = "SELECT COUNT(*) FROM agendamento WHERE scheduled_data = ? AND scheduled_hour = ? AND barber_id = ?";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, agenda.getData_agend());
         stmt.setString(2, agenda.getHora_agend());
@@ -31,7 +31,7 @@ public class AgendamentoDAO {
         }
 
         // Cria o agendamento
-        query = "INSERT INTO agendamento (barber_id, user_id, servico, data_agend, hora_agend, observacao, preco, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        query = "INSERT INTO agendamento (barber_id, user_id, service, scheduled_data, scheduled_hour, description, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         stmt = con.prepareStatement(query);
         stmt.setInt(1, agenda.getBarberId());
         stmt.setInt(2, agenda.getClienteId());
@@ -61,7 +61,7 @@ public class AgendamentoDAO {
         try {
             stmt = con.prepareStatement(
         """
-                SELECT barber.name AS barbeiro, user.name AS cliente, servico, data_agend, hora_agend, observacao, preco
+                SELECT barber.name AS barber, user.name AS client, service, scheduled_data, scheduled_hour, description, price
                 FROM agendamento
                 JOIN barber ON barber.id = agendamento.barber_id
                 JOIN user ON user.id = agendamento.user_id;""");
@@ -71,13 +71,13 @@ public class AgendamentoDAO {
             while (rs.next()) {
                 Agendamento tbAgendamento = new Agendamento();
 
-                tbAgendamento.setBarbeiro(rs.getString("barbeiro"));
-                tbAgendamento.setCliente(rs.getString("cliente"));
-                tbAgendamento.setServico(rs.getString("servico"));
-                tbAgendamento.setData_agend(rs.getString("data_agend"));
-                tbAgendamento.setHora_agend(rs.getString("hora_agend"));
-                tbAgendamento.setObservacao(rs.getString("observacao"));
-                tbAgendamento.setPreco(rs.getInt("preco"));
+                tbAgendamento.setBarbeiro(rs.getString("barber"));
+                tbAgendamento.setCliente(rs.getString("client"));
+                tbAgendamento.setServico(rs.getString("service"));
+                tbAgendamento.setData_agend(rs.getString("scheduled_data"));
+                tbAgendamento.setHora_agend(rs.getString("scheduled_hour"));
+                tbAgendamento.setObservacao(rs.getString("description"));
+                tbAgendamento.setPreco(rs.getInt("price"));
                 agendas.add(tbAgendamento);
            } 
              
@@ -101,7 +101,7 @@ public class AgendamentoDAO {
         try {
             stmt = con.prepareStatement(
         """
-                SELECT barber.name AS barbeiro, user.name AS cliente, servico, data_agend, hora_agend, observacao, preco 
+                SELECT barber.name AS barber, user.name AS client, service, scheduled_data, scheduled_hour, description, price 
                 FROM agendamento
                 JOIN barber ON barber.id = agendamento.barber_id
                 JOIN user ON user.id = agendamento.user_id
@@ -113,13 +113,13 @@ public class AgendamentoDAO {
             while (rs.next()) {
                 Agendamento tbAgendamento = new Agendamento();
 
-                tbAgendamento.setBarbeiro(rs.getString("barbeiro"));
-                tbAgendamento.setCliente(rs.getString("cliente"));
-                tbAgendamento.setServico(rs.getString("servico"));
-                tbAgendamento.setData_agend(rs.getString("data_agend"));
-                tbAgendamento.setHora_agend(rs.getString("hora_agend"));
-                tbAgendamento.setObservacao(rs.getString("observacao"));
-                tbAgendamento.setPreco(rs.getInt("preco"));
+                tbAgendamento.setBarbeiro(rs.getString("barber"));
+                tbAgendamento.setCliente(rs.getString("client"));
+                tbAgendamento.setServico(rs.getString("service"));
+                tbAgendamento.setData_agend(rs.getString("scheduled_data"));
+                tbAgendamento.setHora_agend(rs.getString("scheduled_hour"));
+                tbAgendamento.setObservacao(rs.getString("description"));
+                tbAgendamento.setPreco(rs.getInt("price"));
                 agendas.add(tbAgendamento);
            } 
              
@@ -137,7 +137,7 @@ public class AgendamentoDAO {
       try {
         Connection con = Conexao.faz_conexao();
             
-        String sql = "UPDATE agendamento SET barber_id = ?, user_id = ?, servico = ?, data_agend = ?, hora_agend = ?, observacao = ? WHERE id = ?)";
+        String sql = "UPDATE agendamento SET barber_id = ?, user_id = ?, service = ?, scheduled_data = ?, scheduled_hour = ?, description = ? WHERE id = ?)";
 
         PreparedStatement stmt = con.prepareStatement(sql);
 
