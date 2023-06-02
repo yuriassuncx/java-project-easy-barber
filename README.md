@@ -32,7 +32,7 @@ Para rodar localmente este projeto:
 ```sh
 - Dê um clone, ou baixe, este projeto;
 - Importe o schema, que se encontra na branch `backend`, para o seu MySQL Workbench;
-- Importe o projeto em java, que se encontra na branch `frontend`, para o seu NetBeans;
+- Importe o projeto em java, que se encontra na branch `main`, para o seu NetBeans;
 - Lá em Source Packages -> database -> DBConnection.java -> passe as informações necessárias para a conexão do banco mysql (nome do schema, usuário do mysql, senha);
 - Aproveite a experiência :D
 ```
