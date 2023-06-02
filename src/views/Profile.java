@@ -75,7 +75,7 @@ public class Profile extends javax.swing.JFrame {
             stmt = con.prepareStatement(
         """
                 SELECT COUNT(*) AS total
-                FROM agendamento
+                FROM schedule
                 WHERE user_id = ? AND status = true;""");
             
             stmt.setInt(1, user_id);

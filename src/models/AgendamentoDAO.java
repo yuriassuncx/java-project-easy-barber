@@ -16,7 +16,7 @@ public class AgendamentoDAO {
         Connection con = Conexao.faz_conexao();
         
         // Verifica se já existe um agendamento com a mesma data e hora
-        String query = "SELECT COUNT(*) FROM agendamento WHERE scheduled_data = ? AND scheduled_hour = ? AND barber_id = ?";
+        String query = "SELECT COUNT(*) FROM schedule WHERE scheduled_data = ? AND scheduled_hour = ? AND barber_id = ?";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, agenda.getData_agend());
         stmt.setString(2, agenda.getHora_agend());
@@ -31,7 +31,7 @@ public class AgendamentoDAO {
         }
 
         // Cria o agendamento
-        query = "INSERT INTO agendamento (barber_id, user_id, service, scheduled_data, scheduled_hour, description, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        query = "INSERT INTO schedule (barber_id, user_id, service, scheduled_data, scheduled_hour, description, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         stmt = con.prepareStatement(query);
         stmt.setInt(1, agenda.getBarberId());
         stmt.setInt(2, agenda.getClienteId());
@@ -62,9 +62,9 @@ public class AgendamentoDAO {
             stmt = con.prepareStatement(
         """
                 SELECT barber.name AS barber, user.name AS client, service, scheduled_data, scheduled_hour, description, price
-                FROM agendamento
-                JOIN barber ON barber.id = agendamento.barber_id
-                JOIN user ON user.id = agendamento.user_id;""");
+                FROM schedule
+                JOIN barber ON barber.id = schedule.barber_id
+                JOIN user ON user.id = schedule.user_id;""");
             
             rs = stmt.executeQuery();
             
@@ -102,9 +102,9 @@ public class AgendamentoDAO {
             stmt = con.prepareStatement(
         """
                 SELECT barber.name AS barber, user.name AS client, service, scheduled_data, scheduled_hour, description, price 
-                FROM agendamento
-                JOIN barber ON barber.id = agendamento.barber_id
-                JOIN user ON user.id = agendamento.user_id
+                FROM schedule
+                JOIN barber ON barber.id = schedule.barber_id
+                JOIN user ON user.id = schedule.user_id
                 WHERE user_id = ?;""");
             
             stmt.setInt(1, user_id);
@@ -137,7 +137,7 @@ public class AgendamentoDAO {
       try {
         Connection con = Conexao.faz_conexao();
             
-        String sql = "UPDATE agendamento SET barber_id = ?, user_id = ?, service = ?, scheduled_data = ?, scheduled_hour = ?, description = ? WHERE id = ?)";
+        String sql = "UPDATE schedule SET barber_id = ?, user_id = ?, service = ?, scheduled_data = ?, scheduled_hour = ?, description = ? WHERE id = ?)";
 
         PreparedStatement stmt = con.prepareStatement(sql);
 

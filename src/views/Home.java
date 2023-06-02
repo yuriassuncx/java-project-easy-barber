@@ -100,7 +100,7 @@ public class Home extends javax.swing.JFrame {
         try {
             Connection con = Conexao.faz_conexao();
 
-            String sql = "SELECT hora_agend FROM agendamento WHERE data_agend = ? AND barber_id = ?";
+            String sql = "SELECT scheduled_hour FROM schedule WHERE scheduled_data = ? AND barber_id = ?";
 
             PreparedStatement stmt = con.prepareStatement(sql);
 
