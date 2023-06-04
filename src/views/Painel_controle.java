@@ -8,10 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Fábio
- */
+
 public class Painel_controle extends javax.swing.JFrame {
 
     /**

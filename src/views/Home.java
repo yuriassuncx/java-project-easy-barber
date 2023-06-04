@@ -114,7 +114,7 @@ public class Home extends javax.swing.JFrame {
 
             // Percorre os horários já agendados para removê-los dos horários disponíveis
             while (rs.next()) {
-                String horaAgendada = rs.getString("hora_agend");
+                String horaAgendada = rs.getString("scheduled_hour");
                 horariosDisponiveis.remove(horaAgendada);
             }
 

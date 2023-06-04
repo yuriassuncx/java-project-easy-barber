@@ -76,7 +76,7 @@ public class Profile extends javax.swing.JFrame {
         """
                 SELECT COUNT(*) AS total
                 FROM schedule
-                WHERE user_id = ? AND status = true;""");
+                WHERE user_id = ? AND payment_pending = false;""");
             
             stmt.setInt(1, user_id);
             rs = stmt.executeQuery();

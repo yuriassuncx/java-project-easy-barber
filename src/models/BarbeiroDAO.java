@@ -1,6 +1,5 @@
 package models;
 
-
 import java.sql.PreparedStatement;
 import database.Conexao;
 import java.sql.ResultSet;

@@ -11,10 +11,7 @@ import java.awt.print.PrinterJob;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author Fábio
- */
+
 public class Card extends javax.swing.JFrame {
     
     LocalDate dataAtual = LocalDate.now();

@@ -1,6 +1,5 @@
 package models;
 
-
 import java.sql.PreparedStatement;
 import database.Conexao;
 import java.sql.ResultSet;
@@ -31,7 +30,7 @@ public class AgendamentoDAO {
         }
 
         // Cria o agendamento
-        query = "INSERT INTO schedule (barber_id, user_id, service, scheduled_data, scheduled_hour, description, price, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        query = "INSERT INTO schedule (barber_id, user_id, service, scheduled_data, scheduled_hour, description, price, payment_pending) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         stmt = con.prepareStatement(query);
         stmt.setInt(1, agenda.getBarberId());
         stmt.setInt(2, agenda.getClienteId());
@@ -40,7 +39,7 @@ public class AgendamentoDAO {
         stmt.setString(5, agenda.getHora_agend());
         stmt.setString(6, agenda.getObservacao());
         stmt.setInt(7, agenda.getPreco());
-        stmt.setBoolean(8, false);
+        stmt.setBoolean(8, true);
         stmt.executeUpdate();
            
         JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
@@ -157,5 +156,39 @@ public class AgendamentoDAO {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro");
         }   
+    }
+    
+    public List<Pending> getPendingSchedulesWithPrice() throws SQLException {
+        Connection con = Conexao.faz_conexao();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Pending> scheduleList = new ArrayList();
+
+        try {
+            stmt = con.prepareStatement(
+                "SELECT user.name AS user_name, schedule.price " +
+                "FROM schedule " +
+                "JOIN user ON schedule.user_id = user.id " +
+                "WHERE schedule.payment_pending = true"
+            );
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String userName = rs.getString("user_name");
+                int price = rs.getInt("price");
+
+                Pending scheduleInfo = new Pending(userName, price);
+                scheduleList.add(scheduleInfo);
+            }
+
+            stmt.close();
+            rs.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro");
+        }
+
+        return scheduleList;
     }
 }

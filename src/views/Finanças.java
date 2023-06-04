@@ -4,10 +4,17 @@
  */
 package views;
 
-/**
- *
- * @author Fábio
- */
+import models.Finance;
+import models.FinanceDAO;
+import java.util.List;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+import models.AgendamentoDAO;
+import models.Pending;
+
+
 public class Finanças extends javax.swing.JFrame {
 
     /**
@@ -15,8 +22,56 @@ public class Finanças extends javax.swing.JFrame {
      */
     public Finanças() {
         initComponents();
+        try {
+            readFinances();
+            readTabela();
+        } catch (SQLException ex) {
+            Logger.getLogger(Finanças.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+    
+    public void readTabela() throws SQLException {
+        DefaultTableModel modelo = (DefaultTableModel) jtAgenda.getModel();
+        modelo.setNumRows(0);
+        int totalPrice = 0;
+        
+        AgendamentoDAO pdao = new AgendamentoDAO();
+        
+        for(Pending p: pdao.getPendingSchedulesWithPrice()){
+            modelo.addRow(new Object[]{
+                p.getUserName(),
+                p.getPrice()
+            });
+            
+            totalPrice += p.getPrice();
+        }
+        
+        TotalPriceLabel.setText("R$ " + String.valueOf(totalPrice) + ",00");
+    }
+    
+    public void readFinances() throws SQLException {
+        FinanceDAO financeDao = new FinanceDAO();
+        
+        try {
+            List<Finance> financeList = financeDao.read();
+            
+            if (!financeList.isEmpty()) {
+                Finance finance = financeList.get(0); // Acessa o primeiro elemento da lista
+                float lucros = finance.getLucros();
+                float saldos = finance.getSaldos();
+                float despesas = finance.getDespesas();
 
+                // Atualiza o texto do JLabel com os valores
+                lucrosLabel.setText("Lucros: R$" + lucros + "0");
+                saldoLabel.setText("Saldos: R$" + saldos + "0");
+                despesasLabel.setText("Despesas: R$" + despesas + "0");
+            }
+        } catch (SQLException ex) {
+            // Trate o erro de SQL
+            ex.printStackTrace();
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,27 +84,20 @@ public class Finanças extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jSeparator3 = new javax.swing.JSeparator();
         jLabel28 = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
-        jLabel33 = new javax.swing.JLabel();
-        jLabel34 = new javax.swing.JLabel();
-        jSeparator5 = new javax.swing.JSeparator();
+        TotalPriceLabel = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        jLabel36 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jtAgenda = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        lucrosLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
+        saldoLabel = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
+        despesasLabel = new javax.swing.JLabel();
         PainelButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         ProfileIcon = new javax.swing.JLabel();
@@ -73,47 +121,40 @@ public class Finanças extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel6.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 380, 30));
 
         jLabel28.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
         jLabel28.setText("Total:");
-        jPanel6.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, 50));
+        jPanel6.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, -1, 40));
 
-        jLabel29.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel29.setText("R$ 150,00");
-        jPanel6.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, -1, 60));
-
-        jLabel30.setFont(new java.awt.Font("Javanese Text", 1, 18)); // NOI18N
-        jLabel30.setText("Matheus Messias");
-        jPanel6.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 60));
-
-        jLabel31.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel31.setText("R$ 50,00");
-        jPanel6.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, -1, 60));
-
-        jLabel32.setFont(new java.awt.Font("Javanese Text", 1, 18)); // NOI18N
-        jLabel32.setText("Matheus Messias");
-        jPanel6.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, 60));
-        jPanel6.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 380, 30));
-
-        jLabel33.setFont(new java.awt.Font("Javanese Text", 1, 18)); // NOI18N
-        jLabel33.setText("Matheus Messias");
-        jPanel6.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 60));
-
-        jLabel34.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel34.setText("R$ 50,00");
-        jPanel6.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, 60));
-        jPanel6.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 380, 30));
+        TotalPriceLabel.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
+        TotalPriceLabel.setText("R$ 150,00");
+        jPanel6.add(TotalPriceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 250, -1, 60));
 
         jLabel35.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
         jLabel35.setText("Pendências");
-        jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, 60));
+        jPanel6.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, -1, 60));
 
-        jLabel36.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel36.setText("R$ 50,00");
-        jPanel6.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, 60));
+        jtAgenda.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 420, 310));
+            },
+            new String [] {
+                "Nome", "Valor"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtAgenda);
+
+        jPanel6.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 60, 630, 190));
+
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 660, 310));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -122,27 +163,27 @@ public class Finanças extends javax.swing.JFrame {
         jLabel8.setText("Lucros:");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 60));
 
-        jLabel18.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel18.setText("R$ 5.840");
-        jPanel4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, -1, 60));
+        lucrosLabel.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
+        lucrosLabel.setText("R$ 5.840");
+        jPanel4.add(lucrosLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, -1, 60));
         jPanel4.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 380, 30));
 
         jLabel20.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
         jLabel20.setText("Saldo:");
         jPanel4.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, 60));
 
-        jLabel21.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel21.setText("R$ 9.640");
-        jPanel4.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, 60));
+        saldoLabel.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
+        saldoLabel.setText("R$ 9.640");
+        jPanel4.add(saldoLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, 60));
         jPanel4.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 380, 30));
 
         jLabel22.setFont(new java.awt.Font("Javanese Text", 1, 28)); // NOI18N
         jLabel22.setText("Despesas:");
         jPanel4.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, 60));
 
-        jLabel23.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
-        jLabel23.setText("R$ 3.800");
-        jPanel4.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, -1, 60));
+        despesasLabel.setFont(new java.awt.Font("Javanese Text", 0, 22)); // NOI18N
+        despesasLabel.setText("R$ 3.800");
+        jPanel4.add(despesasLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, -1, 60));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 70, 420, 200));
 
@@ -269,31 +310,24 @@ public class Finanças extends javax.swing.JFrame {
     private javax.swing.JButton PainelButton;
     private javax.swing.JLabel ProfileIcon;
     private javax.swing.JLabel SidebarBackground;
+    private javax.swing.JLabel TotalPriceLabel;
+    private javax.swing.JLabel despesasLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel30;
-    private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JTable jtAgenda;
+    private javax.swing.JLabel lucrosLabel;
+    private javax.swing.JLabel saldoLabel;
     // End of variables declaration//GEN-END:variables
 }

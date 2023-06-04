@@ -12,10 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import models.Barber;
 import models.BarbeiroDAO;
 
-/**
- *
- * @author Fábio
- */
+
 public class Gerenciamento_barbeiro extends javax.swing.JFrame {
 
     /**

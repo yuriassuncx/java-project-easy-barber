@@ -13,10 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Fábio
- */
+
 public class FeedbacksDAO {
     public List<Feedback> read() throws SQLException {        
         Connection con = Conexao.faz_conexao();

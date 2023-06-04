@@ -8,10 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import models.Service;
 import models.ServiceDAO;
 
-/**
- *
- * @author Fábio
- */
+
 public class Serviços extends javax.swing.JFrame {
 
     /**

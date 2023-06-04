@@ -4,10 +4,6 @@
  */
 package models;
 
-/**
- *
- * @author Fábio
- */
 public class Feedback {
     private String barber_name;
     private int total_likes;

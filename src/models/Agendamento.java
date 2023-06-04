@@ -4,10 +4,6 @@
  */
 package models;
 
-/**
- *
- * @author Fábio
- */
 public class Agendamento {
     private String barbeiro;
     private String cliente;
