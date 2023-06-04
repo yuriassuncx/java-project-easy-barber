@@ -23,6 +23,12 @@ CREATE TABLE `barber` (
     `name` VARCHAR(50) NOT NULL
 );
 
+CREATE TABLE `service` (
+	`id` INT PRIMARY KEY AUTO_INCREMENT,
+    `cut_type` VARCHAR(50) NOT NULL,
+    `price` INT NOT NULL
+);
+
 CREATE TABLE `schedule` (
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
     `user_id` INT NOT NULL,
@@ -32,7 +38,7 @@ CREATE TABLE `schedule` (
     `scheduled_hour` VARCHAR(50) NOT NULL,
     `description` VARCHAR(150),
     `price` INT NOT NULL,
-    `status` BOOLEAN NOT NULL DEFAULT FALSE,
+    `payment_pending` BOOLEAN NOT NULL DEFAULT TRUE,
     `created_at` TIMESTAMP DEFAULT NOW(),
     
     UNIQUE (`scheduled_data`, `scheduled_hour`, `barber_id`),
@@ -40,10 +46,12 @@ CREATE TABLE `schedule` (
     FOREIGN KEY (`barber_id`) REFERENCES `barber`(`id`) ON UPDATE CASCADE
 );
 
-CREATE TABLE `service` (
-	`id` INT PRIMARY KEY AUTO_INCREMENT,
-    `cut_type` VARCHAR(50) NOT NULL,
-    `price` INT NOT NULL
+CREATE TABLE `finance` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `sales` DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    `profit` DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    `expenses` DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE `feedback` (
@@ -60,6 +68,8 @@ CREATE TABLE `feedback` (
 
 ALTER TABLE `feedback` ADD CONSTRAINT `unique_user_barber_feedback` UNIQUE (user_id, barber_id);
 
+INSERT INTO `admin`(`name`, `email`, `password`) VALUES ("admin", "admin", "admin");
+
 INSERT INTO `user`(`name`, `email`, `password`) VALUES ("teste", "teste", "teste");
 INSERT INTO `user`(`name`, `email`, `password`) VALUES ("teste2", "teste2", "teste2");
 
@@ -67,7 +77,9 @@ INSERT INTO `barber`(`name`) VALUES ("barbeiro1");
 INSERT INTO `barber`(`name`) VALUES ("barbeiro2");
 INSERT INTO `barber`(`name`) VALUES ("barbeiro3");
 
+INSERT INTO `finance` (`sales`, `profit`, `expenses`) VALUES (100.00, 50.00, 30.00);
+INSERT INTO `finance` (`sales`, `profit`, `expenses`) VALUES (150.00, 75.00, 45.00);
+
 INSERT INTO `feedback`(`barber_id`, `user_id`, `is_liked`, `description`) VALUES (3, 1, true, "Habilidade");
-INSERT INTO `feedback`(`barber_id`, `user_id`, `is_liked`, `description`) VALUES (3, 2, true, "Habilidade");
 INSERT INTO `feedback`(`barber_id`, `user_id`, `is_liked`, `description`) VALUES (2, 1, true, "Gentileza");
 INSERT INTO `feedback`(`barber_id`, `user_id`, `is_liked`, `description`) VALUES (1, 2, false, "Não gostei");
