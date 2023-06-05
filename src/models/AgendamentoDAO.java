@@ -30,16 +30,15 @@ public class AgendamentoDAO {
         }
 
         // Cria o agendamento
-        query = "INSERT INTO schedule (barber_id, user_id, service, scheduled_data, scheduled_hour, description, price, payment_pending) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        query = "INSERT INTO schedule (barber_id, user_id, service_id, scheduled_data, scheduled_hour, description, payment_pending) VALUES (?, ?, ?, ?, ?, ?, ?)";
         stmt = con.prepareStatement(query);
         stmt.setInt(1, agenda.getBarberId());
         stmt.setInt(2, agenda.getClienteId());
-        stmt.setString(3, agenda.getServico());
+        stmt.setInt(3, agenda.getServiceId());
         stmt.setString(4, agenda.getData_agend());
         stmt.setString(5, agenda.getHora_agend());
         stmt.setString(6, agenda.getObservacao());
-        stmt.setInt(7, agenda.getPreco());
-        stmt.setBoolean(8, true);
+        stmt.setBoolean(7, true);
         stmt.executeUpdate();
            
         JOptionPane.showMessageDialog(null, "Dados cadastrado com sucesso!");
@@ -59,11 +58,13 @@ public class AgendamentoDAO {
     
         try {
             stmt = con.prepareStatement(
-        """
-                SELECT barber.name AS barber, user.name AS client, service, scheduled_data, scheduled_hour, description, price
-                FROM schedule
-                JOIN barber ON barber.id = schedule.barber_id
-                JOIN user ON user.id = schedule.user_id;""");
+    """
+            SELECT barber.name AS barber, user.name AS client, service.cut_type AS service, service.price AS price, scheduled_data, scheduled_hour, description
+            FROM schedule
+            JOIN barber ON barber.id = schedule.barber_id
+            JOIN user ON user.id = schedule.user_id
+            JOIN service ON service.id = schedule.service_id;""");
+            
             
             rs = stmt.executeQuery();
             
@@ -99,12 +100,15 @@ public class AgendamentoDAO {
     
         try {
             stmt = con.prepareStatement(
-        """
-                SELECT barber.name AS barber, user.name AS client, service, scheduled_data, scheduled_hour, description, price 
+            """
+                SELECT barber.name AS barber, user.name AS client, service.cut_type AS service, schedule.scheduled_data, schedule.scheduled_hour, schedule.description, service.price AS price 
                 FROM schedule
                 JOIN barber ON barber.id = schedule.barber_id
                 JOIN user ON user.id = schedule.user_id
-                WHERE user_id = ?;""");
+                JOIN service ON service.id = schedule.service_id
+                WHERE schedule.user_id = ?;
+                """
+            );
             
             stmt.setInt(1, user_id);
             rs = stmt.executeQuery();
@@ -136,13 +140,13 @@ public class AgendamentoDAO {
       try {
         Connection con = Conexao.faz_conexao();
             
-        String sql = "UPDATE schedule SET barber_id = ?, user_id = ?, service = ?, scheduled_data = ?, scheduled_hour = ?, description = ? WHERE id = ?)";
+        String sql = "UPDATE schedule SET barber_id = ?, user_id = ?, service_id = ?, scheduled_data = ?, scheduled_hour = ?, description = ? WHERE id = ?)";
 
         PreparedStatement stmt = con.prepareStatement(sql);
 
         stmt.setInt(1,agenda.getBarberId());
         stmt.setInt(2,agenda.getClienteId());
-        stmt.setString(3,agenda.getServico());
+        stmt.setInt(3,agenda.getServiceId());
         stmt.setString(4,agenda.getData_agend());
         stmt.setString(5,agenda.getHora_agend());
         stmt.setString(6,agenda.getObservacao());
@@ -167,9 +171,10 @@ public class AgendamentoDAO {
 
         try {
             stmt = con.prepareStatement(
-                "SELECT user.name AS user_name, schedule.price " +
+                "SELECT user.name AS user_name, service.price " +
                 "FROM schedule " +
                 "JOIN user ON schedule.user_id = user.id " +
+                "JOIN service ON schedule.service_id = service.id " +
                 "WHERE schedule.payment_pending = true"
             );
             rs = stmt.executeQuery();

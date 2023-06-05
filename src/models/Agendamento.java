@@ -7,9 +7,10 @@ package models;
 public class Agendamento {
     private String barbeiro;
     private String cliente;
+    private String servico;
     private int barber_id;
     private int user_id;
-    private String servico;
+    private int service_id;
     private String data_agend;
     private String hora_agend;
     private String observacao;
@@ -47,13 +48,21 @@ public class Agendamento {
     public void setCliente(String cliente) {
         this.cliente = cliente;
     }
-
+    
     public String getServico() {
         return servico;
     }
 
     public void setServico(String servico) {
         this.servico = servico;
+    }
+
+    public int getServiceId() {
+        return service_id;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.service_id = serviceId;
     }
 
     public String getData_agend() {

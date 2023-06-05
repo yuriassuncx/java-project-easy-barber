@@ -495,11 +495,10 @@ public class Home extends javax.swing.JFrame {
         
         agenda.setBarberId(BarberComboBox.getSelectedIndex());
         agenda.setClienteId(user_id);
-        agenda.setServico((String) ServiceComboBox.getSelectedItem());
+        agenda.setServiceId(ServiceComboBox.getSelectedIndex());
         agenda.setData_agend((String) DateComboBox.getSelectedItem());
         agenda.setHora_agend((String) HourComboBox.getSelectedItem());
         agenda.setObservacao(ObsTextArea.getText());
-        agenda.setPreco(Integer.parseInt(cutValueLabel.getText()));
         
         try {
             dao.create(agenda);
