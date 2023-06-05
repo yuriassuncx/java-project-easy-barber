@@ -33,17 +33,17 @@ CREATE TABLE `schedule` (
 	`id` INT PRIMARY KEY AUTO_INCREMENT,
     `user_id` INT NOT NULL,
     `barber_id` INT NOT NULL,
-    `service` VARCHAR(50) NOT NULL,
+    `service_id` INT NOT NULL,
     `scheduled_data` VARCHAR(50) NOT NULL,
     `scheduled_hour` VARCHAR(50) NOT NULL,
     `description` VARCHAR(150),
-    `price` INT NOT NULL,
     `payment_pending` BOOLEAN NOT NULL DEFAULT TRUE,
     `created_at` TIMESTAMP DEFAULT NOW(),
     
     UNIQUE (`scheduled_data`, `scheduled_hour`, `barber_id`),
     FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON UPDATE CASCADE,
-    FOREIGN KEY (`barber_id`) REFERENCES `barber`(`id`) ON UPDATE CASCADE
+    FOREIGN KEY (`barber_id`) REFERENCES `barber`(`id`) ON UPDATE CASCADE,
+    FOREIGN KEY (`service_id`) REFERENCES`service`(`id`) ON UPDATE CASCADE
 );
 
 CREATE TABLE `finance` (
